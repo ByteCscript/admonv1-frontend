@@ -5,15 +5,15 @@ function App() {
   const [mensaje, setMensaje] = useState("");
   const [db, setDb] = useState(null);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
-    // Consume GET http://localhost:8080/api/hola
-    fetch("http://localhost:8080/api/hola")
+    fetch(`${API_URL}/api/hola`)
       .then((response) => response.text())
       .then((data) => setMensaje(data))
       .catch((error) => console.error("Error:", error));
 
-    // Consume GET http://localhost:8080/api/db
-    fetch("http://localhost:8080/api/db")
+    fetch(`${API_URL}/api/db`)
       .then((response) => response.json())
       .then((data) => setDb(data))
       .catch((error) => console.error("Error DB:", error));
