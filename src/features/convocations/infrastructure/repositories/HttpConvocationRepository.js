@@ -1,6 +1,8 @@
 import { ConvocationRepository } from "../../domain/repositories/ConvocationRepository";
-import { fetchConvocations } from "../api/convocations.api";
-
+import {
+  fetchConvocations,
+  fetchConvocationById,
+} from "../api/convocations.api";
 // Adapter Pattern:
 // Adapta la infraestructura HTTP al contrato definido por el dominio.
 //
@@ -9,5 +11,9 @@ import { fetchConvocations } from "../api/convocations.api";
 export class HttpConvocationRepository extends ConvocationRepository {
   async getAll() {
     return await fetchConvocations();
+  }
+
+  async getById(id) {
+    return await fetchConvocationById(id);
   }
 }

@@ -16,3 +16,17 @@ export async function fetchConvocations() {
 
   return json.data;
 }
+
+// Infrastructure Gateway:
+// Retrieves a specific convocation through HTTP.
+export async function fetchConvocationById(id) {
+  const response = await fetch(`${BASE_URL}/calls/${id}`);
+
+  if (!response.ok) {
+    throw new Error(`Error loading convocation: ${response.status}`);
+  }
+
+  const json = await response.json();
+
+  return json.data;
+}

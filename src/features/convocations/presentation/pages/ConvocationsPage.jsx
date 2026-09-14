@@ -41,7 +41,7 @@ export default function ConvocationsPage() {
                         key={convocation.id}
                         convocation={convocation}
                         onViewDetails={() =>
-                            navigate(`/convocatoria/${convocation.id}`)
+                            navigate(`/convocations/${convocation.id}`)
                         }
                     />
                 ))}
