@@ -11,23 +11,32 @@ export default function Navbar() {
         <div className="nav-brand-icon">🏠</div>
         MiConjunto
       </div>
+
       <div className="nav-links">
-        <button className="nav-link" onClick={() => navigate("/")}>
+        <button
+          className={`nav-link ${loc === "/" ? "active" : ""}`}
+          onClick={() => navigate("/")}
+        >
           Inicio
         </button>
+
         <button
-          className={`nav-link ${loc === "/" || loc.startsWith("/convocatoria") ? "active" : ""}`}
-          onClick={() => navigate("/")}
+          className={`nav-link ${loc.startsWith("/convocations") ? "active" : ""
+            }`}
+          onClick={() => navigate("/convocations")}
         >
           Convocatorias
         </button>
+
         <button
-          className={`nav-link ${loc === "/mis-postulaciones" ? "active" : ""}`}
+          className={`nav-link ${loc === "/mis-postulaciones" ? "active" : ""
+            }`}
           onClick={() => navigate("/mis-postulaciones")}
         >
           Mis Postulaciones
         </button>
       </div>
+
       <div className="nav-user">
         <div className="nav-user-info">
           <div className="nav-user-name">{RESIDENT.name}</div>
