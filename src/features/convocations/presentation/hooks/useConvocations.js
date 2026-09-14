@@ -3,7 +3,7 @@ import { getConvocationsUseCase } from "../../convocations.dependencies";
 
 export default function useConvocations() {
   // Presentation State Pattern:
-  // Encapsula el estado requerido por la vista.
+  // Encapsulates the state required by the view.
   const [convocations, setConvocations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,7 +15,7 @@ export default function useConvocations() {
         setError(null);
 
         // Use Case invocation:
-        // La presentación delega la operación a la capa de aplicación.
+        // The presentation layer delegates the operation to the application layer.
         const data = await getConvocationsUseCase.execute();
 
         setConvocations(Array.isArray(data) ? data : []);
@@ -30,7 +30,7 @@ export default function useConvocations() {
   }, []);
 
   // Facade-like abstraction:
-  // Expone a la vista únicamente el estado que necesita.
+  // It exposes only the state that is needed.
   return {
     convocations,
     loading,

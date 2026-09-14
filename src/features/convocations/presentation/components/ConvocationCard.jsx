@@ -1,8 +1,8 @@
 // Presentational Component Pattern:
-// Componente enfocado únicamente en representación visual.
+// Component focused solely on visual representation.
 //
 // Single Responsibility Principle:
-// Renderiza una convocatoria y emite la acción de ver detalle.
+// Renders a call for applications and triggers the "view details" action.
 export default function ConvocationCard({
     convocation,
     onViewDetails,

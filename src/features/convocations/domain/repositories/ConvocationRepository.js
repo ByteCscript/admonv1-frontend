@@ -1,6 +1,6 @@
 // Repository Pattern:
-// Define el contrato de acceso a datos del dominio.
-// Desacopla la lógica de negocio de la fuente de persistencia.
+// Defines the domain data access contract.
+// Decouples business logic from the persistence source.
 export class ConvocationRepository {
   async getAll() {
     throw new Error("Method getAll() not implemented");

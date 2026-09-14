@@ -1,10 +1,10 @@
 const BASE_URL = "/api";
 
 // Infrastructure Gateway:
-// Centraliza la comunicación HTTP con servicios externos.
+// Centralizes HTTP communication with external services.
 //
 // Single Responsibility Principle:
-// Este módulo únicamente conoce detalles de transporte HTTP.
+// This module is only aware of HTTP transport details.
 export async function fetchConvocations() {
   const response = await fetch(`${BASE_URL}/calls`);
 

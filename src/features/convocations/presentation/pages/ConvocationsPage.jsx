@@ -5,11 +5,11 @@ import { Loading, ErrorMessage } from "../../../../components/UI";
 
 export default function ConvocationsPage() {
     // Controller responsibility:
-    // Coordina interacción de la vista y navegación.
+    // Coordinates the interaction between the view and navigation.
     const navigate = useNavigate();
 
     // Presentation abstraction:
-    // Consume el estado preparado por el hook.
+    // Consumes the state prepared by the hook.
     const {
         convocations,
         loading,

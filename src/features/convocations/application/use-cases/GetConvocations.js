@@ -1,12 +1,12 @@
 // Use Case Pattern:
-// Encapsula una operación específica de la aplicación.
+// It encapsulates a specific application operation.
 //
 // Dependency Inversion Principle:
-// Depende de una abstracción de repositorio, no de una implementación HTTP concreta.
+// It depends on a repository abstraction, not on a concrete HTTP implementation.
 export class GetConvocations {
   constructor(convocationRepository) {
     // Dependency Injection:
-    // La dependencia se recibe externamente en lugar de instanciarse aquí.
+    // The dependency is received externally instead of being instantiated here.
     this.convocationRepository = convocationRepository;
   }
 

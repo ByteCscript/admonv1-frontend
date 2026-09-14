@@ -3,11 +3,10 @@ import { GetConvocationById } from "./application/use-cases/GetConvocationById";
 import { HttpConvocationRepository } from "./infrastructure/repositories/HttpConvocationRepository";
 
 // Composition Root:
-// Centraliza la creación y conexión de dependencias.
+// Centralizes the creation and connection of dependencies.
 //
 // Dependency Injection:
-// Inyecta la implementación concreta del repositorio
-// dentro del caso de uso.
+// Injects the concrete implementation of the repository into the use case.
 const convocationRepository = new HttpConvocationRepository();
 
 export const getConvocationsUseCase = new GetConvocations(

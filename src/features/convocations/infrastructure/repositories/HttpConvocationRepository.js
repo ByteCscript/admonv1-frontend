@@ -4,10 +4,10 @@ import {
   fetchConvocationById,
 } from "../api/convocations.api";
 // Adapter Pattern:
-// Adapta la infraestructura HTTP al contrato definido por el dominio.
+// Adapts the HTTP infrastructure to the contract defined by the domain.
 //
 // Repository Pattern:
-// Implementa el repositorio concreto para obtener datos vía API REST.
+// Implement the concrete repository to retrieve data via the REST API.
 export class HttpConvocationRepository extends ConvocationRepository {
   async getAll() {
     return await fetchConvocations();
