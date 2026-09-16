@@ -4,7 +4,7 @@ import ConvocationsPage from "./features/convocations/presentation/pages/Convoca
 import ConvocationDetailPage from "./features/convocations/presentation/pages/ConvocationDetailPage";
 import CreateApplicationPage from "./features/applications/presentation/pages/CreateApplicationPage";
 import ApplicationsPage from "./features/applications/presentation/pages/ApplicationsPage";
-import ApplicationDetailPage from "./pages/ApplicationDetailPage";
+import ApplicationDetailPage from "./features/applications/presentation/pages/ApplicationDetailPage";
 import "./App.css";
 
 export default function App() {
@@ -23,7 +23,10 @@ export default function App() {
             element={<CreateApplicationPage />}
           />
           <Route path="/mis-postulaciones" element={<ApplicationsPage />} />
-          <Route path="/postulacion/:id" element={<ApplicationDetailPage />} />
+          <Route
+            path="/applications/:id"
+            element={<ApplicationDetailPage />}
+          />
         </Routes>
       </div>
     </BrowserRouter>

@@ -66,3 +66,23 @@ export async function fetchApplications({
 
   return json.data;
 }
+
+// Infrastructure Gateway:
+// Retrieves an authenticated application by identifier.
+export async function fetchApplicationById(id) {
+  const token = await getToken();
+
+  const response = await fetch(`${BASE_URL}/applications/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error loading application: ${response.status}`);
+  }
+
+  const json = await response.json();
+
+  return json.data;
+}

@@ -1,6 +1,7 @@
 import { GetApplications } from "./application/use-cases/GetApplications";
 import { CreateApplication } from "./application/use-cases/CreateApplication";
 import { UploadDocument } from "./application/use-cases/UploadDocument";
+import { GetApplicationById } from "./application/use-cases/GetApplicationById";
 
 import { HttpApplicationRepository } from "./infrastructure/repositories/HttpApplicationRepository";
 import { HttpDocumentRepository } from "./infrastructure/repositories/HttpDocumentRepository";
@@ -20,5 +21,9 @@ export const createApplicationUseCase = new CreateApplication(
 export const uploadDocumentUseCase = new UploadDocument(documentRepository);
 
 export const getApplicationsUseCase = new GetApplications(
+  applicationRepository,
+);
+
+export const getApplicationByIdUseCase = new GetApplicationById(
   applicationRepository,
 );

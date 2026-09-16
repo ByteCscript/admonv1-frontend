@@ -12,4 +12,8 @@ export class ApplicationRepository {
   async getAll() {
     throw new Error("Method getAll() not implemented");
   }
+
+  async getById() {
+    throw new Error("Method getById() not implemented");
+  }
 }
