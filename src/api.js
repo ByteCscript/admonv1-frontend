@@ -1,4 +1,32 @@
+// src/api.js
 const BASE = "/api";
+
+export async function getToken() {
+  console.log("ENTRÓ A getToken");
+
+  const response = await fetch(`${BASE}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: "residente@test.com",
+      password: "123456",
+    }),
+  });
+
+  console.log("LOGIN STATUS:", response.status);
+
+  if (!response.ok) {
+    throw new Error(`Error login: ${response.status}`);
+  }
+
+  const json = await response.json();
+
+  console.log("TOKEN:", json.data.token);
+
+  return json.data.token;
+}
 
 export async function getCall(callId) {
   const res = await fetch(`${BASE}/calls/${callId}`);
