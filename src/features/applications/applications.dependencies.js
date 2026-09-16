@@ -1,3 +1,4 @@
+import { GetApplications } from "./application/use-cases/GetApplications";
 import { CreateApplication } from "./application/use-cases/CreateApplication";
 import { UploadDocument } from "./application/use-cases/UploadDocument";
 
@@ -17,3 +18,7 @@ export const createApplicationUseCase = new CreateApplication(
 );
 
 export const uploadDocumentUseCase = new UploadDocument(documentRepository);
+
+export const getApplicationsUseCase = new GetApplications(
+  applicationRepository,
+);
