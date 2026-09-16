@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import ConvocationsPage from "./features/convocations/presentation/pages/ConvocationsPage";
 import ConvocationDetailPage from "./features/convocations/presentation/pages/ConvocationDetailPage";
 import CreateApplicationPage from "./features/applications/presentation/pages/CreateApplicationPage";
-import ApplicationsPage from "./pages/ApplicationsPage";
+import ApplicationsPage from "./features/applications/presentation/pages/ApplicationsPage";
 import ApplicationDetailPage from "./pages/ApplicationDetailPage";
 import "./App.css";
 

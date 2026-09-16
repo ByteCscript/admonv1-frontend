@@ -8,4 +8,8 @@ export class ApplicationRepository {
   async uploadDocument(file, onProgress) {
     throw new Error("Method uploadDocument() not implemented");
   }
+
+  async getAll() {
+    throw new Error("Method getAll() not implemented");
+  }
 }

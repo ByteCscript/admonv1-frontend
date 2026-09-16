@@ -33,3 +33,36 @@ export async function createApplicationRequest({
 
   return json.data;
 }
+
+// Infrastructure Gateway:
+// Retrieves authenticated applications from the backend.
+export async function fetchApplications({
+  residentId,
+  page = 0,
+  size = 10,
+} = {}) {
+  const token = await getToken();
+
+  const params = new URLSearchParams({
+    page: String(page),
+    size: String(size),
+  });
+
+  if (residentId) {
+    params.set("residentId", residentId);
+  }
+
+  const response = await fetch(`${BASE_URL}/applications?${params}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error loading applications: ${response.status}`);
+  }
+
+  const json = await response.json();
+
+  return json.data;
+}
