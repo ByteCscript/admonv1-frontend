@@ -2,6 +2,7 @@ import { ApplicationRepository } from "../../domain/repositories/ApplicationRepo
 import {
   createApplicationRequest,
   fetchApplications,
+  fetchApplicationById,
 } from "../api/applications.api";
 
 // Adapter Pattern:
@@ -16,5 +17,9 @@ export class HttpApplicationRepository extends ApplicationRepository {
 
   async getAll(filters) {
     return await fetchApplications(filters);
+  }
+
+  async getById(id) {
+    return await fetchApplicationById(id);
   }
 }
