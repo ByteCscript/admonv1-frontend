@@ -1,12 +1,18 @@
+//src/features/applications/infrastructure/api/documents.api.js
+import { getToken } from "../../../../api";
+
 const BASE_URL = "/api";
 
 // Infrastructure Gateway:
-// Requests a temporary upload URL from the backend.
+// Requests an authorized upload URL from the backend.
 async function generatePresignedUrl(file) {
+  const token = await getToken();
+
   const response = await fetch(`${BASE_URL}/documents/presigned-url`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       fileName: file.name,
@@ -25,13 +31,12 @@ async function generatePresignedUrl(file) {
 }
 
 // Infrastructure Gateway:
-// Transfers the binary file using the generated URL.
+// Uploads the binary directly through the presigned URL.
 function uploadBinary(file, uploadUrl, onProgress) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
 
     xhr.open("PUT", uploadUrl);
-
     xhr.setRequestHeader("Content-Type", file.type);
 
     xhr.upload.onprogress = (event) => {
@@ -57,10 +62,15 @@ function uploadBinary(file, uploadUrl, onProgress) {
 }
 
 // Infrastructure Gateway:
-// Confirms that the document upload has finished.
+// Confirms the upload with the authenticated backend.
 async function completeDocument(documentId) {
+  const token = await getToken();
+
   const response = await fetch(`${BASE_URL}/documents/${documentId}/complete`, {
     method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!response.ok) {
@@ -72,8 +82,8 @@ async function completeDocument(documentId) {
   return json.data;
 }
 
-// Facade:
-// Coordinates the complete infrastructure upload process.
+// Facade Pattern:
+// Coordinates the complete document upload workflow.
 export async function uploadDocumentRequest(file, onProgress) {
   const presigned = await generatePresignedUrl(file);
 
