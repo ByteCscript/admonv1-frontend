@@ -52,8 +52,9 @@
 
 /* ── Buttons ── */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 24px;border-radius:10px;font-size:14px;font-weight:600;border:none;transition:all .15s}
+.btn:disabled{opacity:.5;cursor:not-allowed}
 .btn-primary{background:var(--teal-600);color:var(--white)}
-.btn-primary:hover{background:var(--teal-700)}
+.btn-primary:hover:not(:disabled){background:var(--teal-700)}
 .btn-secondary{background:var(--white);color:var(--gray-700);border:1px solid var(--gray-200)}
 .btn-secondary:hover{background:var(--gray-50);border-color:var(--gray-300)}
 .btn-card{width:100%;padding:10px;border:1px solid var(--gray-200);border-radius:10px;background:var(--white);font-size:14px;font-weight:600;color:var(--gray-700);transition:all .15s}
@@ -126,6 +127,10 @@
 .resident-field-value{font-size:15px;font-weight:600;color:var(--gray-800)}
 .resident-field-value.green{color:var(--green-700)}
 
+/* ── Document type block ── */
+.document-type-block{padding-bottom:16px;border-bottom:1px solid var(--gray-100);margin-bottom:20px}
+.document-type-block:last-child{border-bottom:none;margin-bottom:0}
+
 /* ── Upload zone ── */
 .upload-zone{border:2px dashed var(--gray-300);border-radius:12px;padding:32px 20px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:16px}
 .upload-zone:hover{border-color:var(--teal-600);background:var(--teal-50)}
@@ -194,7 +199,7 @@
 .empty-state p{font-size:16px;margin-bottom:20px}
 
 /* ── Tooltip ── */
-.tooltip{position:relative;display:inline-flex;margin-left:6px;vertical-align:middle}
+.tooltip{position:relative;display:inline-flex;margin-left:6px;vertical-align:middle;text-transform:none}
 .tooltip-trigger{display:flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1px solid var(--amber-500);background:var(--amber-100);color:var(--amber-700);font-size:11px;font-weight:700;font-style:italic;font-family:Georgia,serif;line-height:1;padding:0}
 .tooltip-trigger:hover,.tooltip-trigger:focus-visible{border-color:var(--amber-700);color:var(--amber-700);background:#fde68a}
 .tooltip-content{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%) translateY(4px);width:220px;padding:10px 12px;background:var(--amber-100);color:var(--amber-700);font-size:12px;font-weight:400;line-height:1.5;border-radius:8px;border:1px solid #fde68a;box-shadow:0 4px 16px rgba(0,0,0,.15);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .15s ease,transform .15s ease;z-index:20}
