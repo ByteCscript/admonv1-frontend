@@ -1,5 +1,7 @@
 import { useRef } from "react";
 
+import Tooltip from "../../../../components/Tooltip";
+
 // Presentational Component Pattern:
 // Handles document upload user interaction.
 export default function DocumentUpload({
@@ -62,6 +64,7 @@ export default function DocumentUpload({
                 }}
             >
                 Documentos Requeridos
+                <Tooltip text="El paz y salvo certifica que no tienes deudas pendientes con la administración; debe cargarse en formato pdf." />
             </h2>
 
             <p

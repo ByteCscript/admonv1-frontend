@@ -1,3 +1,5 @@
+import Tooltip from "../../../../components/Tooltip";
+
 // Presentational Component Pattern:
 // Renders convocation information without infrastructure dependencies.
 //
@@ -34,6 +36,7 @@ export default function ConvocationInfo({
                 <div className="spec-item">
                     <div className="spec-label">
                         Cupos Disponibles
+                        <Tooltip text="Número de espacios que aún pueden ser asignados en esta convocatoria." />
                     </div>
 
                     <div className="spec-value">
@@ -44,6 +47,7 @@ export default function ConvocationInfo({
                 <div className="spec-item">
                     <div className="spec-label">
                         Estado
+                        <Tooltip text="Una convocatoria abierta acepta nuevas postulaciones; al agotarse los cupos pasa a cerrada y no se reciben más postulaciones." />
                     </div>
 
                     <div className="spec-value">
