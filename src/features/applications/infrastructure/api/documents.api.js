@@ -1,25 +1,26 @@
-//src/features/applications/infrastructure/api/documents.api.js
-import { getToken } from "../../../../api";
+// src/features/applications/infrastructure/api/documents.api.js
+
+import { authenticatedFetch } from "../../../../shared/infrastructure/http/authenticatedFetch";
 
 const BASE_URL = "/api";
 
 // Infrastructure Gateway:
 // Requests an authorized upload URL from the backend.
 async function generatePresignedUrl(file) {
-  const token = await getToken();
-
-  const response = await fetch(`${BASE_URL}/documents/presigned-url`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+  const response = await authenticatedFetch(
+    `${BASE_URL}/documents/presigned-url`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fileName: file.name,
+        contentType: file.type,
+        size: file.size,
+      }),
     },
-    body: JSON.stringify({
-      fileName: file.name,
-      contentType: file.type,
-      size: file.size,
-    }),
-  });
+  );
 
   if (!response.ok) {
     throw new Error(`Error generating upload URL: ${response.status}`);
@@ -32,6 +33,9 @@ async function generatePresignedUrl(file) {
 
 // Infrastructure Gateway:
 // Uploads the binary directly through the presigned URL.
+//
+// External Service:
+// This request does not use the application's JWT.
 function uploadBinary(file, uploadUrl, onProgress) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -64,14 +68,12 @@ function uploadBinary(file, uploadUrl, onProgress) {
 // Infrastructure Gateway:
 // Confirms the upload with the authenticated backend.
 async function completeDocument(documentId) {
-  const token = await getToken();
-
-  const response = await fetch(`${BASE_URL}/documents/${documentId}/complete`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
+  const response = await authenticatedFetch(
+    `${BASE_URL}/documents/${documentId}/complete`,
+    {
+      method: "POST",
     },
-  });
+  );
 
   if (!response.ok) {
     throw new Error(`Error completing document: ${response.status}`);

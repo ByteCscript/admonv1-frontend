@@ -1,5 +1,6 @@
 // src/features/applications/infrastructure/api/applications.api.js
-import { getToken } from "../../../../api";
+
+import { authenticatedFetch } from "../../../../shared/infrastructure/http/authenticatedFetch";
 
 const BASE_URL = "/api";
 
@@ -10,13 +11,10 @@ export async function createApplicationRequest({
   residentId,
   documentIds,
 }) {
-  const token = await getToken();
-
-  const response = await fetch(`${BASE_URL}/applications`, {
+  const response = await authenticatedFetch(`${BASE_URL}/applications`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       callId: convocationId,
@@ -41,8 +39,6 @@ export async function fetchApplications({
   page = 0,
   size = 10,
 } = {}) {
-  const token = await getToken();
-
   const params = new URLSearchParams({
     page: String(page),
     size: String(size),
@@ -52,11 +48,9 @@ export async function fetchApplications({
     params.set("residentId", residentId);
   }
 
-  const response = await fetch(`${BASE_URL}/applications?${params}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await authenticatedFetch(
+    `${BASE_URL}/applications?${params}`,
+  );
 
   if (!response.ok) {
     throw new Error(`Error loading applications: ${response.status}`);
@@ -70,13 +64,7 @@ export async function fetchApplications({
 // Infrastructure Gateway:
 // Retrieves an authenticated application by identifier.
 export async function fetchApplicationById(id) {
-  const token = await getToken();
-
-  const response = await fetch(`${BASE_URL}/applications/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await authenticatedFetch(`${BASE_URL}/applications/${id}`);
 
   if (!response.ok) {
     throw new Error(`Error loading application: ${response.status}`);
