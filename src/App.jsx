@@ -5,6 +5,8 @@ import ConvocationDetailPage from "./features/convocations/presentation/pages/Co
 import CreateApplicationPage from "./features/applications/presentation/pages/CreateApplicationPage";
 import ApplicationsPage from "./features/applications/presentation/pages/ApplicationsPage";
 import ApplicationDetailPage from "./features/applications/presentation/pages/ApplicationDetailPage";
+import LoginPage from "./features/auth/presentation/pages/LoginPage";
+
 import "./App.css";
 
 export default function App() {
@@ -26,6 +28,10 @@ export default function App() {
           <Route
             path="/applications/:id"
             element={<ApplicationDetailPage />}
+          />
+          <Route
+            path="/login"
+            element={<LoginPage />}
           />
         </Routes>
       </div>
