@@ -9,6 +9,7 @@ export default function LoginPage() {
     // Temporary Development Credentials:
     // Preloads the current backend test user for local development.
     const [email, setEmail] = useState("residente@test.com");
+    const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState("123456");
 
     const handleSubmit = async (event) => {
@@ -100,7 +101,7 @@ export default function LoginPage() {
 
                                 <input
                                     id="password"
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     value={password}
                                     onChange={(event) =>
                                         setPassword(event.target.value)
@@ -108,6 +109,19 @@ export default function LoginPage() {
                                     placeholder="Ingresa tu contraseña"
                                     required
                                 />
+
+                                <button
+                                    type="button"
+                                    className="password-toggle"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    aria-label={
+                                        showPassword
+                                            ? "Ocultar contraseña"
+                                            : "Mostrar contraseña"
+                                    }
+                                >
+                                    {showPassword ? "🙈" : "👁️"}
+                                </button>
                             </div>
                         </div>
 

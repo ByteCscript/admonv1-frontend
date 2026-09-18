@@ -470,3 +470,24 @@
     padding: 30px 20px;
   }
 }
+
+
+.password-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 4px;
+  border: none;
+  background: transparent;
+
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0.65;
+
+  transition: opacity 0.2s ease;
+}
+
+.password-toggle:hover {
+  opacity: 1;
+}
