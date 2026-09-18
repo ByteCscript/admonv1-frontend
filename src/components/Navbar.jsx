@@ -20,7 +20,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="nav-brand">
         <div className="nav-brand-icon">🏠</div>
-        MiConjunto
+        Cheyoung
       </div>
 
       <div className="nav-links">
@@ -33,8 +33,8 @@ export default function Navbar() {
 
         <button
           className={`nav-link ${loc.startsWith("/convocations")
-              ? "active"
-              : ""
+            ? "active"
+            : ""
             }`}
           onClick={() =>
             navigate("/convocations")
@@ -45,8 +45,8 @@ export default function Navbar() {
 
         <button
           className={`nav-link ${loc === "/mis-postulaciones"
-              ? "active"
-              : ""
+            ? "active"
+            : ""
             }`}
           onClick={() =>
             navigate("/mis-postulaciones")
