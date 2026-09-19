@@ -47,18 +47,24 @@ export default function ConvocationDetailPage() {
 
             const result = await checkApplicationEligibility(id);
 
-            if (result.status === 200) {
-                setApplicationMessage(
-                    result.message || "Ya tienes una postulación registrada."
-                );
-
+            // Eligible:
+            // User can continue with the application process.
+            if (result.data?.canApply === true) {
+                navigate(`/convocations/${id}/apply`);
                 return;
             }
 
-            if (result.status === 400) {
-                navigate(`/convocations/${id}/apply`);
+            // Not Eligible:
+            // Displays the backend eligibility message.
+            if (result.data?.canApply === false) {
+                setApplicationMessage(
+                    result.message || "Ya tienes una postulación registrada."
+                );
             }
+
         } catch (error) {
+            console.error("Error checking application eligibility:", error);
+
             setApplicationMessage(
                 "No fue posible validar la postulación."
             );
