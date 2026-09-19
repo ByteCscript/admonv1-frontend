@@ -11,6 +11,7 @@ export default function ApplicationCard({
 }) {
     return (
         <div
+            data-testid={`application-card-${application.id}`}
             className="application-row"
             onClick={onSelect}
         >

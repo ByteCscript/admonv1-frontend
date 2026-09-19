@@ -17,7 +17,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" data-testid="navbar">
       <div className="nav-brand">
         <div className="nav-brand-icon">🏠</div>
         Cheyoung
@@ -25,6 +25,7 @@ export default function Navbar() {
 
       <div className="nav-links">
         <button
+          data-testid="nav-link-home"
           className={`nav-link ${loc === "/" ? "active" : ""}`}
           onClick={() => navigate("/")}
         >
@@ -32,6 +33,7 @@ export default function Navbar() {
         </button>
 
         <button
+          data-testid="nav-link-convocations"
           className={`nav-link ${loc.startsWith("/convocations")
             ? "active"
             : ""
@@ -44,6 +46,7 @@ export default function Navbar() {
         </button>
 
         <button
+          data-testid="nav-link-applications"
           className={`nav-link ${loc === "/mis-postulaciones"
             ? "active"
             : ""
@@ -72,6 +75,7 @@ export default function Navbar() {
         </div>
 
         <button
+          data-testid="nav-logout-button"
           className="nav-link"
           onClick={handleLogout}
         >

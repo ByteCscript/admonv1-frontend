@@ -9,8 +9,9 @@ export default function Tooltip({ text, position = "top" }) {
   const id = useId();
 
   return (
-    <span className="tooltip">
+    <span className="tooltip" data-testid="tooltip">
       <button
+        data-testid="tooltip-trigger"
         type="button"
         className="tooltip-trigger"
         aria-describedby={id}

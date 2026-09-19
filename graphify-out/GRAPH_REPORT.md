@@ -1,100 +1,112 @@
-# Graph Report - admonv1-frontend  (2026-08-28)
+# Graph Report - admonv1-frontend  (2026-09-18)
 
 ## Corpus Check
-- Corpus is ~4,149 words - fits in a single context window. You may not need a graph.
+- Corpus is ~8,386 words - fits in a single context window. You may not need a graph.
 
 ## Summary
-- 72 nodes · 82 edges · 16 communities (8 shown, 8 thin omitted)
-- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 9 edges (avg confidence: 0.86)
+- 214 nodes · 373 edges · 12 communities
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
-- API Service Layer
-- React+Vite Stack
+- Application Use Cases
+- Application Domain
+- App Routing
 - Package Config
-- Social Icons
-- React Dependencies
-- ESLint Base
-- ESLint Core
-- React Hooks Lint
-- React Refresh Lint
-- Globals Package
-- React Types
-- React DOM Types
-- Vite Build
-- Vite React Plugin
+- UI Components
+- Presentation Layer
+- Convocations Logic
+- Auth Domain
+- Document Management
+- Dev Tooling
 
 ## God Nodes (most connected - your core abstractions)
-1. `Social Media Icon Sprite Sheet` - 7 edges
-2. `React + Vite Template` - 6 edges
-3. `scripts` - 5 edges
-4. `ApplicationPage()` - 4 edges
-5. `getCall()` - 4 edges
-6. `uploadFile()` - 4 edges
-7. `README Documentation` - 4 edges
-8. `MiConjunto - Sistema de Gestion Residencial Entry Point` - 4 edges
-9. `getCalls()` - 3 edges
-10. `createApplication()` - 3 edges
+1. `react` - 13 edges
+2. `authenticatedFetch()` - 11 edges
+3. `react-router-dom` - 10 edges
+4. `ApplicationRepository` - 7 edges
+5. `HttpAuthRepository` - 7 edges
+6. `Loading()` - 6 edges
+7. `ErrorMessage()` - 6 edges
+8. `uploadDocumentRequest()` - 6 edges
+9. `HttpApplicationRepository` - 6 edges
+10. `AuthRepository` - 6 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `MiConjunto - Sistema de Gestion Residencial Entry Point` --references--> `React Logo`  [INFERRED]
-  index.html → src/assets/react.svg
-- `Vite Logo` --semantically_similar_to--> `Favicon (Vite Lightning Bolt)`  [INFERRED] [semantically similar]
-  src/assets/vite.svg → public/favicon.svg
-- `Hero Image - Isometric Container Box` --rationale_for--> `Sistema de Gestion Residencial (MiConjunto)`  [INFERRED]
-  src/assets/hero.png → index.html
-- `React Logo` --conceptually_related_to--> `React + Vite Template`  [INFERRED]
-  src/assets/react.svg → README.md
-- `Vite Logo` --conceptually_related_to--> `React + Vite Template`  [INFERRED]
-  src/assets/vite.svg → README.md
+- `generatePresignedUrl()` --calls--> `authenticatedFetch()`  [EXTRACTED]
+  src/features/applications/infrastructure/api/documents.api.js → src/shared/infrastructure/http/authenticatedFetch.js
+- `completeDocument()` --calls--> `authenticatedFetch()`  [EXTRACTED]
+  src/features/applications/infrastructure/api/documents.api.js → src/shared/infrastructure/http/authenticatedFetch.js
+- `CreateApplicationPage()` --calls--> `useConvocation()`  [EXTRACTED]
+  src/features/applications/presentation/pages/CreateApplicationPage.jsx → src/features/convocations/presentation/hooks/useConvocation.js
+- `HttpApplicationRepository` --inherits--> `ApplicationRepository`  [EXTRACTED]
+  src/features/applications/infrastructure/repositories/HttpApplicationRepository.js → src/features/applications/domain/repositories/ApplicationRepository.js
+- `HttpDocumentRepository` --inherits--> `DocumentRepository`  [EXTRACTED]
+  src/features/applications/infrastructure/repositories/HttpDocumentRepository.js → src/features/applications/domain/repositories/DocumentRepository.js
 
 ## Import Cycles
 - None detected.
 
-## Hyperedges (group relationships)
-- **React + Vite Development Stack** — concept_react_vite_template, src_assets_react_svg, src_assets_vite_svg, public_favicon_svg, index_html [INFERRED 0.85]
-- **Social Media Icon Sprite Collection** — public_icons_svg, symbol_bluesky_icon, symbol_discord_icon, symbol_github_icon, symbol_x_icon, symbol_social_icon, symbol_documentation_icon [EXTRACTED 1.00]
-- **Application Branding and Identity Assets** — src_assets_hero_png, public_favicon_svg, concept_residencial_management [INFERRED 0.75]
+## Communities (12 total, 0 thin omitted)
 
-## Communities (16 total, 8 thin omitted)
+### Community 0 - "Application Use Cases"
+Cohesion: 0.09
+Nodes (12): CreateApplication, GetApplicationById, GetApplications, UploadDocument, applicationRepository, createApplicationUseCase, documentRepository, getApplicationByIdUseCase (+4 more)
 
-### Community 0 - "API Service Layer"
-Cohesion: 0.24
-Nodes (10): createApplication(), generatePresignedUrl(), getCall(), getCalls(), uploadFile(), App(), ApplicationPage(), CallsPage() (+2 more)
+### Community 1 - "Application Domain"
+Cohesion: 0.13
+Nodes (10): ApplicationRepository, createApplicationRequest(), fetchApplicationById(), fetchApplications(), HttpApplicationRepository, ConvocationRepository, fetchConvocationById(), fetchConvocations() (+2 more)
 
-### Community 1 - "React+Vite Stack"
-Cohesion: 0.27
-Nodes (11): Hot Module Replacement (HMR), React Compiler, React + Vite Template, Sistema de Gestion Residencial (MiConjunto), TypeScript ESLint Integration, MiConjunto - Sistema de Gestion Residencial Entry Point, Favicon (Vite Lightning Bolt), README Documentation (+3 more)
+### Community 2 - "App Routing"
+Cohesion: 0.13
+Nodes (12): react, react-router-dom, App(), Navbar(), Login, authRepository, loginUseCase, tokenStorage (+4 more)
 
-### Community 2 - "Package Config"
+### Community 3 - "Package Config"
+Cohesion: 0.09
+Nodes (23): dependencies, react, react-dom, react-router-dom, name, private, scripts, build (+15 more)
+
+### Community 4 - "UI Components"
+Cohesion: 0.14
+Nodes (15): ErrorMessage(), Loading(), StatusBadge(), getApplicationsUseCase, ApplicationCard(), ApplicationDetails(), ApplicationDocuments(), ApplicationStatus() (+7 more)
+
+### Community 5 - "Presentation Layer"
+Cohesion: 0.16
+Nodes (9): Stepper(), STEPS, Tooltip(), RESIDENT, ApplicationStepper(), ApplicationSummary(), ConvocationInfo(), DocumentUpload() (+1 more)
+
+### Community 6 - "Convocations Logic"
+Cohesion: 0.15
+Nodes (8): GetConvocationById, GetConvocations, convocationRepository, getConvocationByIdUseCase, getConvocationsUseCase, ConvocationInfo(), useConvocation(), ConvocationDetailPage()
+
+### Community 7 - "Auth Domain"
+Cohesion: 0.17
+Nodes (4): AuthSession, AuthRepository, loginRequest(), HttpAuthRepository
+
+### Community 8 - "Document Management"
+Cohesion: 0.31
+Nodes (6): DocumentRepository, completeDocument(), generatePresignedUrl(), uploadBinary(), uploadDocumentRequest(), HttpDocumentRepository
+
+### Community 9 - "Dev Tooling"
 Cohesion: 0.20
-Nodes (9): name, private, scripts, build, dev, lint, preview, type (+1 more)
-
-### Community 3 - "Social Icons"
-Cohesion: 0.25
-Nodes (8): Social Media Integration Icons, Social Media Icon Sprite Sheet, Bluesky Social Icon, Discord Icon, Documentation Icon, GitHub Icon, Generic Social Icon, X (Twitter) Icon
-
-### Community 4 - "React Dependencies"
-Cohesion: 0.29
-Nodes (7): dependencies, react, react-dom, react-router-dom, react, react-dom, react-router-dom
-
-### Community 5 - "ESLint Base"
-Cohesion: 0.67
-Nodes (3): @eslint/js, devDependencies, @eslint/js
+Nodes (10): devDependencies, eslint, @eslint/js, eslint-plugin-react-hooks, eslint-plugin-react-refresh, globals, @types/react, @types/react-dom (+2 more)
 
 ## Knowledge Gaps
-- **30 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+25 more)
-  These have ≤1 connection - possible missing edges or undocumented components.
-- **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **29 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+24 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 67 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `devDependencies` connect `ESLint Base` to `Package Config`, `ESLint Core`, `React Hooks Lint`, `React Refresh Lint`, `Globals Package`, `React Types`, `React DOM Types`, `Vite Build`, `Vite React Plugin`?**
-  _High betweenness centrality (0.181) - this node is a cross-community bridge._
-- **Why does `dependencies` connect `React Dependencies` to `Package Config`?**
-  _High betweenness centrality (0.075) - this node is a cross-community bridge._
-- **Are the 5 inferred relationships involving `React + Vite Template` (e.g. with `React Compiler` and `Hot Module Replacement (HMR)`) actually correct?**
-  _`React + Vite Template` has 5 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `react` connect `App Routing` to `Application Use Cases`, `Package Config`, `UI Components`, `Presentation Layer`, `Convocations Logic`?**
+  _High betweenness centrality (0.290) - this node is a cross-community bridge._
+- **Why does `react-router-dom` connect `App Routing` to `Package Config`, `UI Components`, `Presentation Layer`, `Convocations Logic`?**
+  _High betweenness centrality (0.140) - this node is a cross-community bridge._
+- **Why does `devDependencies` connect `Dev Tooling` to `Package Config`?**
+  _High betweenness centrality (0.082) - this node is a cross-community bridge._
 - **What connects `name`, `private`, `version` to the rest of the system?**
-  _30 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _29 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Application Use Cases` be split into smaller, more focused modules?**
+  _Cohesion score 0.09259259259259259 - nodes in this community are weakly interconnected._
+- **Should `Application Domain` be split into smaller, more focused modules?**
+  _Cohesion score 0.12698412698412698 - nodes in this community are weakly interconnected._
+- **Should `App Routing` be split into smaller, more focused modules?**
+  _Cohesion score 0.12535612535612536 - nodes in this community are weakly interconnected._
