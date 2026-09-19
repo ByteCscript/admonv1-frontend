@@ -118,6 +118,7 @@ export default function ApplicationSummary({
 
                     <div className="form-actions">
                         <button
+                            data-testid="application-summary-finish-button"
                             className="btn btn-primary"
                             onClick={onFinish}
                         >

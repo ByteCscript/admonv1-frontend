@@ -85,7 +85,7 @@ function DocumentTypeBlock({
     };
 
     return (
-        <div className="document-type-block">
+        <div className="document-type-block" data-testid={`document-type-block-${type.code}`}>
             <div
                 style={{
                     display: "flex",
@@ -121,6 +121,7 @@ function DocumentTypeBlock({
             {!file || file.status === "error" ? (
                 <>
                     <div
+                        data-testid={`document-upload-zone-${type.code}`}
                         className="upload-zone"
                         ref={dragRef}
                         onDrop={handleDrop}
@@ -144,6 +145,7 @@ function DocumentTypeBlock({
                     </div>
 
                     <input
+                        data-testid={`document-upload-input-${type.code}`}
                         ref={fileInputRef}
                         type="file"
                         accept=".pdf"
@@ -184,6 +186,7 @@ function DocumentTypeBlock({
                             </div>
 
                             <button
+                                data-testid={`document-upload-remove-error-${type.code}`}
                                 className="btn-danger"
                                 onClick={() =>
                                     onRemove(type.code)
@@ -197,6 +200,7 @@ function DocumentTypeBlock({
             ) : (
                 <FileItem
                     file={file}
+                    typeCode={type.code}
                     onRemove={() => onRemove(type.code)}
                 />
             )}
@@ -204,7 +208,7 @@ function DocumentTypeBlock({
     );
 }
 
-function FileItem({ file, onRemove }) {
+function FileItem({ file, typeCode, onRemove }) {
     if (file.status === "uploading") {
         return (
             <div className="upload-progress">
@@ -259,6 +263,7 @@ function FileItem({ file, onRemove }) {
             </div>
 
             <button
+                data-testid={typeCode ? `document-upload-remove-file-${typeCode}` : "document-upload-remove-file"}
                 className="btn-danger"
                 onClick={onRemove}
                 title="Eliminar"

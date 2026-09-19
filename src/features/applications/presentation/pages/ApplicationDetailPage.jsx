@@ -69,6 +69,7 @@ export default function ApplicationDetailPage() {
                         style={{ marginTop: 24 }}
                     >
                         <button
+                            data-testid="application-detail-back-button"
                             className="btn btn-secondary"
                             onClick={() =>
                                 navigate("/mis-postulaciones")

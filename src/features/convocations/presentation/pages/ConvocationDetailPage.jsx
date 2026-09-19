@@ -43,6 +43,7 @@ export default function ConvocationDetailPage() {
         <div className="page">
             <div className="breadcrumb">
                 <span
+                    data-testid="breadcrumb-home"
                     style={{ cursor: "pointer" }}
                     onClick={() => navigate("/")}
                 >
@@ -54,6 +55,7 @@ export default function ConvocationDetailPage() {
                 </span>
 
                 <span
+                    data-testid="breadcrumb-convocations"
                     style={{ cursor: "pointer" }}
                     onClick={() =>
                         navigate("/convocations")
@@ -112,6 +114,7 @@ export default function ConvocationDetailPage() {
                         }}
                     >
                         <button
+                            data-testid="convocation-register-button"
                             className="btn btn-primary"
                             style={{
                                 flex: 1,

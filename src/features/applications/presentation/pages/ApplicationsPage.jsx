@@ -45,6 +45,7 @@ export default function ApplicationsPage() {
                     </p>
 
                     <button
+                        data-testid="applications-empty-view-convocations-button"
                         className="btn btn-primary"
                         onClick={() =>
                             navigate("/convocations")
