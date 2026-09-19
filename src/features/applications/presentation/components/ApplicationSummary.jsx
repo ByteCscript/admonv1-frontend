@@ -12,7 +12,7 @@ export default function ApplicationSummary({
     files,
     onFinish,
 }) {
-    const uploadedFile = files.find(
+    const uploadedFiles = files.filter(
         (file) => file.status === "done"
     );
 
@@ -64,14 +64,37 @@ export default function ApplicationSummary({
                             }
                         />
 
-                        <SummaryRow
-                            label="Documento Adjunto"
-                            value={
-                                <span className="summary-doc-link">
-                                    {uploadedFile?.name || "N/A"}
-                                </span>
-                            }
-                        />
+                        <div className="summary-row">
+                            <span className="summary-label">
+                                Documentos Adjuntos
+                            </span>
+
+                            <span className="summary-value">
+                                {uploadedFiles.length === 0 ? (
+                                    "N/A"
+                                ) : (
+                                    <ul
+                                        style={{
+                                            margin: 0,
+                                            paddingLeft: 18,
+                                        }}
+                                    >
+                                        {uploadedFiles.map(
+                                            (file) => (
+                                                <li
+                                                    key={
+                                                        file.documentType
+                                                    }
+                                                    className="summary-doc-link"
+                                                >
+                                                    {file.name}
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                )}
+                            </span>
+                        </div>
                     </div>
 
                     <div className="warning-box">

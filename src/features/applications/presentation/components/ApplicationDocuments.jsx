@@ -28,6 +28,9 @@ export default function ApplicationDocuments({
 
                     <div className="uploaded-file-info">
                         <div className="uploaded-file-name">
+                            {document.documentTypeLabel
+                                ? `${document.documentTypeLabel} — `
+                                : ""}
                             {document.originalName}
                         </div>
 

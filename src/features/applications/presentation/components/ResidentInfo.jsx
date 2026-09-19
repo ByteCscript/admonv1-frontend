@@ -1,3 +1,5 @@
+import Tooltip from "../../../../components/Tooltip";
+
 // Presentational Component Pattern:
 // Renders resident information without external dependencies.
 //
@@ -34,6 +36,7 @@ export default function ResidentInfo({ resident }) {
                 <div>
                     <div className="resident-field-label">
                         Estado Cuenta
+                        <Tooltip text="Indica si el residente está al día con los pagos de administración; paz y salvo significa que no tiene deudas pendientes." />
                     </div>
 
                     <div className="resident-field-value green">

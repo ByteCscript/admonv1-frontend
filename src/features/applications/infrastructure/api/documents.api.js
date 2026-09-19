@@ -6,7 +6,7 @@ const BASE_URL = "/api";
 
 // Infrastructure Gateway:
 // Requests an authorized upload URL from the backend.
-async function generatePresignedUrl(file) {
+async function generatePresignedUrl(documentType, file) {
   const response = await authenticatedFetch(
     `${BASE_URL}/documents/presigned-url`,
     {
@@ -18,6 +18,7 @@ async function generatePresignedUrl(file) {
         fileName: file.name,
         contentType: file.type,
         size: file.size,
+        documentType,
       }),
     },
   );
@@ -86,8 +87,8 @@ async function completeDocument(documentId) {
 
 // Facade Pattern:
 // Coordinates the complete document upload workflow.
-export async function uploadDocumentRequest(file, onProgress) {
-  const presigned = await generatePresignedUrl(file);
+export async function uploadDocumentRequest(documentType, file, onProgress) {
+  const presigned = await generatePresignedUrl(documentType, file);
 
   await uploadBinary(file, presigned.uploadUrl, onProgress);
 
