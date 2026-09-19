@@ -6,6 +6,8 @@ import {
   useLocation,
 } from "react-router-dom";
 
+import HomePage from "./pages/HomePage";
+
 import Navbar from "./components/Navbar";
 import ConvocationsPage from "./features/convocations/presentation/pages/ConvocationsPage";
 import ConvocationDetailPage from "./features/convocations/presentation/pages/ConvocationDetailPage";
@@ -79,14 +81,14 @@ function AppRoutes() {
         {/* Default Route */}
         <Route
           path="/"
-          element={<Navigate to="/convocations" replace />}
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
         />
 
-        {/* Unknown Routes */}
-        <Route
-          path="*"
-          element={<Navigate to="/" replace />}
-        />
+
       </Routes>
     </div>
   );
