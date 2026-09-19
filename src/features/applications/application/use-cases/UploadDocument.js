@@ -7,11 +7,15 @@ export class UploadDocument {
     this.documentRepository = documentRepository;
   }
 
-  async execute(file, onProgress) {
+  async execute(documentType, file, onProgress) {
     if (!file) {
       throw new Error("Document is required");
     }
 
-    return await this.documentRepository.upload(file, onProgress);
+    if (!documentType) {
+      throw new Error("Document type is required");
+    }
+
+    return await this.documentRepository.upload(documentType, file, onProgress);
   }
 }

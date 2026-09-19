@@ -1,4 +1,4 @@
-const STEPS = ["Informacion", "Documentos", "Confirmacion"];
+const STEPS = ["Información", "Documentos", "Confirmación"];
 
 export default function Stepper({ current }) {
   return (

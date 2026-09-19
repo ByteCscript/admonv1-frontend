@@ -9,10 +9,12 @@ import {
     Loading,
     ErrorMessage,
 } from "../../../../components/UI";
+import Tooltip from "../../../../components/Tooltip";
 
 import useConvocation from "../../../convocations/presentation/hooks/useConvocation";
 import useCreateApplication from "../hooks/useCreateApplication";
 import useDocumentUpload from "../hooks/useDocumentUpload";
+import useDocumentTypes from "../hooks/useDocumentTypes";
 
 import ApplicationStepper from "../components/ApplicationStepper";
 import ResidentInfo from "../components/ResidentInfo";
@@ -47,13 +49,22 @@ export default function CreateApplicationPage() {
     // Presentation abstraction:
     // Encapsulates document upload lifecycle.
     const {
+        filesByType,
         files,
         uploadDocument,
         removeDocument,
         uploadedDocumentIds,
     } = useDocumentUpload();
 
-    if (loading) {
+    // Presentation abstraction:
+    // Exposes the required-document catalog to presentation.
+    const {
+        types: documentTypes,
+        loading: typesLoading,
+        error: typesError,
+    } = useDocumentTypes();
+
+    if (loading || typesLoading) {
         return <Loading />;
     }
 
@@ -65,8 +76,22 @@ export default function CreateApplicationPage() {
         );
     }
 
-    const canSubmit =
-        uploadedDocumentIds.length > 0;
+    if (typesError || documentTypes.length === 0) {
+        return (
+            <ErrorMessage>
+                {typesError ||
+                    "No se pudo cargar el catálogo de documentos."}
+            </ErrorMessage>
+        );
+    }
+
+    const requiredDocumentTypes = documentTypes.filter(
+        (type) => type.required
+    );
+
+    const canSubmit = requiredDocumentTypes.every(
+        (type) => filesByType[type.code]?.status === "done"
+    );
 
     const handleSubmit = async () => {
         try {
@@ -116,12 +141,24 @@ export default function CreateApplicationPage() {
                             className="form-actions"
                             style={{ marginTop: 24 }}
                         >
-                            <button
-                                className="btn btn-primary"
-                                onClick={() => setStep(1)}
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 6,
+                                }}
                             >
-                                Continuar
-                            </button>
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() =>
+                                        setStep(1)
+                                    }
+                                >
+                                    Continuar
+                                </button>
+
+                                <Tooltip text="Avanza al paso de carga de documentos. Podrás volver atrás para revisar tus datos antes de enviar la postulación." />
+                            </div>
                         </div>
                     )}
 
@@ -137,24 +174,36 @@ export default function CreateApplicationPage() {
                                 Atrás
                             </button>
 
-                            <button
-                                className="btn btn-primary"
-                                disabled={
-                                    !canSubmit || submitting
-                                }
-                                onClick={handleSubmit}
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 6,
+                                }}
                             >
-                                {submitting
-                                    ? "Enviando..."
-                                    : "Confirmar y Enviar"}
-                            </button>
+                                <button
+                                    className="btn btn-primary"
+                                    disabled={
+                                        !canSubmit ||
+                                        submitting
+                                    }
+                                    onClick={handleSubmit}
+                                >
+                                    {submitting
+                                        ? "Enviando..."
+                                        : "Confirmar y Enviar"}
+                                </button>
+
+                                <Tooltip text="Envía la postulación con los documentos cargados. Se habilita solo cuando todos los documentos obligatorios estén cargados." />
+                            </div>
                         </div>
                     )}
                 </div>
 
                 {step === 1 && (
                     <DocumentUpload
-                        files={files}
+                        types={documentTypes}
+                        filesByType={filesByType}
                         onUpload={uploadDocument}
                         onRemove={removeDocument}
                     />

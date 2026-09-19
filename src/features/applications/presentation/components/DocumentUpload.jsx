@@ -1,26 +1,58 @@
 import { useRef } from "react";
 
+import Tooltip from "../../../../components/Tooltip";
+
 // Presentational Component Pattern:
-// Handles document upload user interaction.
+// Handles document upload user interaction for a catalog of document types.
 export default function DocumentUpload({
-    files,
+    types,
+    filesByType,
+    onUpload,
+    onRemove,
+}) {
+    return (
+        <div className="sidebar-card">
+            <h2
+                style={{
+                    fontSize: 18,
+                    fontWeight: 700,
+                    marginBottom: 16,
+                }}
+            >
+                Documentos Requeridos
+            </h2>
+
+            {types.map((type) => (
+                <DocumentTypeBlock
+                    key={type.code}
+                    type={type}
+                    file={filesByType[type.code]}
+                    onUpload={onUpload}
+                    onRemove={onRemove}
+                />
+            ))}
+        </div>
+    );
+}
+
+function DocumentTypeBlock({
+    type,
+    file,
     onUpload,
     onRemove,
 }) {
     const fileInputRef = useRef(null);
     const dragRef = useRef(null);
 
-    const handleFile = async (file) => {
-        try {
-            await onUpload(file);
-        } catch (error) {
-            if (
-                error.message ===
-                "Solo se permiten archivos PDF."
-            ) {
-                alert(error.message);
-            }
-        }
+    const tooltipText =
+        `Formato: PDF. Tamaño máximo: ${(
+            type.maxSizeBytes / 1048576
+        ).toFixed(0)} MB. Objetivo: ${type.purpose} ${
+            type.required ? "Obligatorio." : "Opcional."
+        }`;
+
+    const handleFile = (selectedFile) => {
+        onUpload(type.code, selectedFile);
     };
 
     const handleDrop = (event) => {
@@ -30,11 +62,11 @@ export default function DocumentUpload({
             "dragover"
         );
 
-        const file =
+        const droppedFile =
             event.dataTransfer.files[0];
 
-        if (file) {
-            handleFile(file);
+        if (droppedFile) {
+            handleFile(droppedFile);
         }
     };
 
@@ -53,75 +85,121 @@ export default function DocumentUpload({
     };
 
     return (
-        <div className="sidebar-card">
-            <h2
-                style={{
-                    fontSize: 18,
-                    fontWeight: 700,
-                    marginBottom: 16,
-                }}
-            >
-                Documentos Requeridos
-            </h2>
-
-            <p
-                style={{
-                    fontSize: 13,
-                    color: "var(--gray-500)",
-                    marginBottom: 16,
-                }}
-            >
-                Adjunte su certificado de Paz y Salvo
-                en formato PDF.
-            </p>
-
+        <div className="document-type-block">
             <div
-                className="upload-zone"
-                ref={dragRef}
-                onDrop={handleDrop}
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onClick={() =>
-                    fileInputRef.current?.click()
-                }
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    marginBottom: 8,
+                }}
             >
-                <div className="upload-icon">
-                    ☁️
-                </div>
+                <span
+                    style={{
+                        fontSize: 14,
+                        fontWeight: 600,
+                    }}
+                >
+                    {type.label}
+                </span>
 
-                <div className="upload-title">
-                    Cargar Paz y Salvo
-                </div>
+                <span
+                    className={`badge ${
+                        type.required
+                            ? "badge-closed"
+                            : "badge-open"
+                    }`}
+                >
+                    {type.required
+                        ? "Obligatorio"
+                        : "Opcional"}
+                </span>
 
-                <div className="upload-subtitle">
-                    Arrastra o selecciona tu PDF
-                </div>
+                <Tooltip text={tooltipText} />
             </div>
 
-            <input
-                ref={fileInputRef}
-                type="file"
-                accept=".pdf"
-                style={{ display: "none" }}
-                onChange={(event) => {
-                    const file =
-                        event.target.files[0];
+            {!file || file.status === "error" ? (
+                <>
+                    <div
+                        className="upload-zone"
+                        ref={dragRef}
+                        onDrop={handleDrop}
+                        onDragOver={handleDragOver}
+                        onDragLeave={handleDragLeave}
+                        onClick={() =>
+                            fileInputRef.current?.click()
+                        }
+                    >
+                        <div className="upload-icon">
+                            ☁️
+                        </div>
 
-                    if (file) {
-                        handleFile(file);
-                    }
+                        <div className="upload-title">
+                            Cargar {type.label}
+                        </div>
 
-                    event.target.value = "";
-                }}
-            />
+                        <div className="upload-subtitle">
+                            Arrastra o selecciona tu PDF
+                        </div>
+                    </div>
 
-            {files.map((file) => (
+                    <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept=".pdf"
+                        style={{ display: "none" }}
+                        onChange={(event) => {
+                            const selectedFile =
+                                event.target.files[0];
+
+                            if (selectedFile) {
+                                handleFile(selectedFile);
+                            }
+
+                            event.target.value = "";
+                        }}
+                    />
+
+                    {file?.status === "error" && (
+                        <div
+                            className="upload-progress"
+                            style={{
+                                borderColor: "var(--red-100)",
+                                background: "var(--red-100)",
+                            }}
+                        >
+                            <span style={{ fontSize: 18 }}>
+                                ⚠️
+                            </span>
+
+                            <div
+                                style={{
+                                    flex: 1,
+                                    fontSize: 13,
+                                    color: "var(--red-700)",
+                                }}
+                            >
+                                {file.message ||
+                                    `Error al cargar ${file.name}`}
+                            </div>
+
+                            <button
+                                className="btn-danger"
+                                onClick={() =>
+                                    onRemove(type.code)
+                                }
+                            >
+                                Eliminar
+                            </button>
+                        </div>
+                    )}
+                </>
+            ) : (
                 <FileItem
-                    key={file.id}
                     file={file}
-                    onRemove={onRemove}
+                    onRemove={() => onRemove(type.code)}
                 />
-            ))}
+            )}
         </div>
     );
 }
@@ -162,67 +240,30 @@ function FileItem({ file, onRemove }) {
         );
     }
 
-    if (file.status === "done") {
-        return (
-            <div className="uploaded-file">
-                <span className="uploaded-file-icon">
-                    📄
-                </span>
-
-                <div className="uploaded-file-info">
-                    <div className="uploaded-file-name">
-                        {file.name}
-                    </div>
-
-                    <div className="uploaded-file-meta">
-                        {(file.size / 1048576).toFixed(1)} MB
-                        {" · "}
-                        Carga exitosa
-                    </div>
-                </div>
-
-                <button
-                    className="btn-danger"
-                    onClick={() =>
-                        onRemove(file.id)
-                    }
-                    title="Eliminar"
-                >
-                    🗑
-                </button>
-            </div>
-        );
-    }
-
     return (
-        <div
-            className="upload-progress"
-            style={{
-                borderColor: "var(--red-100)",
-                background: "var(--red-100)",
-            }}
-        >
-            <span style={{ fontSize: 18 }}>
-                ⚠️
+        <div className="uploaded-file">
+            <span className="uploaded-file-icon">
+                📄
             </span>
 
-            <div
-                style={{
-                    flex: 1,
-                    fontSize: 13,
-                    color: "var(--red-700)",
-                }}
-            >
-                Error al cargar {file.name}
+            <div className="uploaded-file-info">
+                <div className="uploaded-file-name">
+                    {file.name}
+                </div>
+
+                <div className="uploaded-file-meta">
+                    {(file.size / 1048576).toFixed(1)} MB
+                    {" · "}
+                    Carga exitosa
+                </div>
             </div>
 
             <button
                 className="btn-danger"
-                onClick={() =>
-                    onRemove(file.id)
-                }
+                onClick={onRemove}
+                title="Eliminar"
             >
-                Eliminar
+                🗑
             </button>
         </div>
     );
