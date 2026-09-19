@@ -74,3 +74,19 @@ export async function fetchApplicationById(id) {
 
   return json.data;
 }
+
+// Infrastructure Gateway:
+// Checks whether the authenticated resident can apply to a convocation.
+export async function checkApplicationEligibility(callId) {
+  const response = await authenticatedFetch(
+    `${BASE_URL}/applications/check?callId=${callId}`,
+  );
+
+  const json = await response.json();
+
+  return {
+    status: response.status,
+    data: json.data,
+    message: json.message,
+  };
+}
