@@ -9,9 +9,9 @@ export function StatusBadge({ status }) {
 }
 
 export function Loading() {
-  return <div className="loading">Cargando...</div>;
+  return <div data-testid="loading" className="loading">Cargando...</div>;
 }
 
 export function ErrorMessage({ children }) {
-  return <div className="error-msg">{children}</div>;
+  return <div data-testid="error-message" className="error-msg">{children}</div>;
 }
