@@ -20,9 +20,12 @@ export default function Navbar() {
     <nav className="navbar" data-testid="navbar">
       <div className="nav-brand">
         <div className="nav-brand-icon">🏠</div>
-        Cheyoung
-      </div>
 
+        <div className="nav-brand-info">
+          <span>Cheyoung</span>
+          <small className="app-version">v1.0.0</small>
+        </div>
+      </div>
       <div className="nav-links">
         <button
           data-testid="nav-link-home"
