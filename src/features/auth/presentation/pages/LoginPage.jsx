@@ -72,7 +72,7 @@ export default function LoginPage() {
                         </p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="login-form">
+                    <form onSubmit={handleSubmit} className="login-form" data-testid="login-form">
 
                         <div className="login-field">
                             <label htmlFor="email">Correo electrónico</label>
@@ -81,6 +81,7 @@ export default function LoginPage() {
                                 <span>✉</span>
 
                                 <input
+                                    data-testid="login-email-input"
                                     id="email"
                                     type="email"
                                     value={email}
@@ -100,6 +101,7 @@ export default function LoginPage() {
                                 <span>🔒</span>
 
                                 <input
+                                    data-testid="login-password-input"
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     value={password}
@@ -111,6 +113,7 @@ export default function LoginPage() {
                                 />
 
                                 <button
+                                    data-testid="login-password-toggle"
                                     type="button"
                                     className="password-toggle"
                                     onClick={() => setShowPassword(!showPassword)}
@@ -126,12 +129,13 @@ export default function LoginPage() {
                         </div>
 
                         {error && (
-                            <div className="login-error">
+                            <div data-testid="login-error" className="login-error">
                                 {error}
                             </div>
                         )}
 
                         <button
+                            data-testid="login-submit-button"
                             type="submit"
                             className="login-button"
                             disabled={loading}

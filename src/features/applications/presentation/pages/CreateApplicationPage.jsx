@@ -149,6 +149,7 @@ export default function CreateApplicationPage() {
                                 }}
                             >
                                 <button
+                                    data-testid="create-application-continue-button"
                                     className="btn btn-primary"
                                     onClick={() =>
                                         setStep(1)
@@ -168,6 +169,7 @@ export default function CreateApplicationPage() {
                             style={{ marginTop: 24 }}
                         >
                             <button
+                                data-testid="create-application-back-button"
                                 className="btn btn-secondary"
                                 onClick={() => setStep(0)}
                             >
@@ -182,6 +184,7 @@ export default function CreateApplicationPage() {
                                 }}
                             >
                                 <button
+                                    data-testid="create-application-submit-button"
                                     className="btn btn-primary"
                                     disabled={
                                         !canSubmit ||

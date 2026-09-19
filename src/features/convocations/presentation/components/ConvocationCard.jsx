@@ -10,7 +10,7 @@ export default function ConvocationCard({
     const isOpen = convocation.availableSlots > 0;
 
     return (
-        <div className="call-card">
+        <div className="call-card" data-testid={`convocation-card-${convocation.id}`}>
             <div className="call-card-body">
                 <div className="call-card-meta">
                     <span
@@ -31,6 +31,7 @@ export default function ConvocationCard({
 
                 <div className="call-card-footer">
                     <button
+                        data-testid={`convocation-view-details-button-${convocation.id}`}
                         className="btn-card"
                         disabled={!isOpen}
                         onClick={onViewDetails}
