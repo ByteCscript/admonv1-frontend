@@ -76,6 +76,28 @@ export async function fetchApplicationById(id) {
 }
 
 // Infrastructure Gateway:
+// Cancels an authenticated application by identifier.
+// Backend: PATCH /api/applications/{applicationId}/cancel
+export async function cancelApplicationRequest(id) {
+  if (!id) {
+    throw new Error("Application id is required");
+  }
+
+  const response = await authenticatedFetch(
+    `${BASE_URL}/applications/${id}/cancel`,
+    { method: "PATCH" },
+  );
+
+  const json = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    throw new Error(json?.message || `Error canceling application: ${response.status}`);
+  }
+
+  return json?.data;
+}
+
+// Infrastructure Gateway:
 // Checks whether the authenticated resident can apply to a convocation.
 export async function checkApplicationEligibility(callId) {
   console.log("=== CHECK APPLICATION ELIGIBILITY ===");

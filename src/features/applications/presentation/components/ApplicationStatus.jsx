@@ -10,6 +10,9 @@ export default function ApplicationStatus({
     showMessage = false,
 }) {
     const messages = {
+        REGISTERED:
+            "Su postulación fue registrada correctamente y está pendiente de validación.",
+
         PENDING_VALIDATION:
             "Su postulación está en proceso de validación por la administración.",
 
@@ -18,6 +21,9 @@ export default function ApplicationStatus({
 
         REJECTED:
             "Su postulación no fue aprobada. Contacte a administración para más información.",
+
+        CANCELLED:
+            "Su postulación fue cancelada. Ya no participa en esta convocatoria.",
     };
 
     return (
