@@ -23,7 +23,7 @@ export default function Navbar() {
 
         <div className="nav-brand-info">
           <span>Cheyoung</span>
-          <small className="app-version">v1.0.0</small>
+          <small className="app-version">v234.0.0</small>
         </div>
       </div>
       <div className="nav-links">
