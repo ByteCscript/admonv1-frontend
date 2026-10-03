@@ -38,6 +38,7 @@ export default function useApplication(id) {
 
   return {
     application,
+    setApplication,
     loading,
     error,
   };

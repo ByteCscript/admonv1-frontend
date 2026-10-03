@@ -74,3 +74,56 @@ export async function fetchApplicationById(id) {
 
   return json.data;
 }
+
+// Infrastructure Gateway:
+// Cancels an authenticated application by identifier.
+// Backend: PATCH /api/applications/{applicationId}/cancel
+export async function cancelApplicationRequest(id) {
+  if (!id) {
+    throw new Error("Application id is required");
+  }
+
+  const response = await authenticatedFetch(
+    `${BASE_URL}/applications/${id}/cancel`,
+    { method: "PATCH" },
+  );
+
+  const json = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    throw new Error(json?.message || `Error canceling application: ${response.status}`);
+  }
+
+  return json?.data;
+}
+
+// Infrastructure Gateway:
+// Checks whether the authenticated resident can apply to a convocation.
+export async function checkApplicationEligibility(callId) {
+  console.log("=== CHECK APPLICATION ELIGIBILITY ===");
+  console.log("callId enviado:", callId);
+
+  const response = await authenticatedFetch(
+    `${BASE_URL}/applications/check?callId=${callId}`,
+  );
+
+  console.log("STATUS:", response.status);
+  console.log("STATUS TEXT:", response.statusText);
+  console.log("OK:", response.ok);
+  console.log("HEADERS:", Object.fromEntries(response.headers.entries()));
+
+  const json = await response.json();
+
+  console.log("RESPUESTA COMPLETA:", json);
+  console.log("MESSAGE:", json.message);
+  console.log("DATA:", json.data);
+  console.log("ERROR:", json.error);
+  console.log("====================================");
+
+  return {
+    status: response.status,
+    data: json.data,
+    message: json.message,
+    error: json.error,
+  };
+}

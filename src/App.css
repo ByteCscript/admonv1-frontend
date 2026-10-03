@@ -507,3 +507,16 @@
 .password-toggle:hover {
   opacity: 1;
 }
+
+.nav-brand-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-version {
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 0.6;
+  line-height: 1;
+  margin-top: 2px;
+}

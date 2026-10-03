@@ -16,4 +16,8 @@ export class ApplicationRepository {
   async getById() {
     throw new Error("Method getById() not implemented");
   }
+
+  async cancel() {
+    throw new Error("Method cancel() not implemented");
+  }
 }

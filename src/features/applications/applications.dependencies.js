@@ -1,5 +1,6 @@
 import { GetApplications } from "./application/use-cases/GetApplications";
 import { CreateApplication } from "./application/use-cases/CreateApplication";
+import { CancelApplication } from "./application/use-cases/CancelApplication";
 import { UploadDocument } from "./application/use-cases/UploadDocument";
 import { GetDocumentTypes } from "./application/use-cases/GetDocumentTypes";
 import { GetApplicationById } from "./application/use-cases/GetApplicationById";
@@ -28,5 +29,9 @@ export const getApplicationsUseCase = new GetApplications(
 );
 
 export const getApplicationByIdUseCase = new GetApplicationById(
+  applicationRepository,
+);
+
+export const cancelApplicationUseCase = new CancelApplication(
   applicationRepository,
 );

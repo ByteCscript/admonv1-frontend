@@ -2,7 +2,7 @@ import {
     useNavigate,
     useParams,
 } from "react-router-dom";
-
+import { useState } from "react";
 import {
     Loading,
     ErrorMessage,
@@ -11,11 +11,13 @@ import {
 import Tooltip from "../../../../components/Tooltip";
 import ConvocationInfo from "../components/ConvocationInfo";
 import useConvocation from "../hooks/useConvocation";
+import { checkApplicationEligibility } from "../../../applications/infrastructure/api/applications.api";
+
 
 export default function ConvocationDetailPage() {
     const { id } = useParams();
     const navigate = useNavigate();
-
+    const [applicationMessage, setApplicationMessage] = useState("");
     // Presentation abstraction:
     // Retrieves state through feature-specific hook.
     const {
@@ -38,6 +40,36 @@ export default function ConvocationDetailPage() {
 
     const isOpen =
         convocation.availableSlots > 0;
+
+    const handleApplication = async () => {
+        try {
+            setApplicationMessage("");
+
+            const result = await checkApplicationEligibility(id);
+
+            // Eligible:
+            // User can continue with the application process.
+            if (result.data?.canApply === true) {
+                navigate(`/convocations/${id}/apply`);
+                return;
+            }
+
+            // Not Eligible:
+            // Displays the backend eligibility message.
+            if (result.data?.canApply === false) {
+                setApplicationMessage(
+                    result.message || "Ya tienes una postulación registrada."
+                );
+            }
+
+        } catch (error) {
+            console.error("Error checking application eligibility:", error);
+
+            setApplicationMessage(
+                "No fue posible validar la postulación."
+            );
+        }
+    };
 
     return (
         <div className="page">
@@ -121,14 +153,15 @@ export default function ConvocationDetailPage() {
                                 marginTop: 8,
                             }}
                             disabled={!isOpen}
-                            onClick={() =>
-                                navigate(
-                                    `/convocations/${id}/apply` /* Pendiente aca hay que seguir la traza toda en ngles a ApplicationPage */
-                                )
-                            }
+                            onClick={handleApplication}
                         >
                             Registrar Postulación
                         </button>
+                        {applicationMessage && (
+                            <p className="error-message">
+                                {applicationMessage}
+                            </p>
+                        )}
 
                         <Tooltip text="Inicia el formulario de postulación para esta convocatoria. Deberás confirmar tus datos y adjuntar los documentos requeridos antes de enviarla." />
                     </div>

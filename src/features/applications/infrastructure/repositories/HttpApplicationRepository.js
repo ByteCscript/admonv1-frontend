@@ -3,6 +3,7 @@ import {
   createApplicationRequest,
   fetchApplications,
   fetchApplicationById,
+  cancelApplicationRequest,
 } from "../api/applications.api";
 
 // Adapter Pattern:
@@ -21,5 +22,9 @@ export class HttpApplicationRepository extends ApplicationRepository {
 
   async getById(id) {
     return await fetchApplicationById(id);
+  }
+
+  async cancel(id) {
+    return await cancelApplicationRequest(id);
   }
 }
