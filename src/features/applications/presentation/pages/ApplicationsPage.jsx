@@ -5,6 +5,7 @@ import {
     ErrorMessage,
 } from "../../../../components/UI";
 
+import { RESIDENT } from "../../../../constants";
 import useApplications from "../hooks/useApplications";
 import ApplicationCard from "../components/ApplicationCard";
 
@@ -12,12 +13,12 @@ export default function ApplicationsPage() {
     const navigate = useNavigate();
 
     // Presentation abstraction:
-    // Retrieves application state through the feature hook.
+    // Retrieves only the logged resident's applications.
     const {
         applications,
         loading,
         error,
-    } = useApplications();
+    } = useApplications({ residentId: RESIDENT.id });
 
     if (loading) {
         return <Loading />;

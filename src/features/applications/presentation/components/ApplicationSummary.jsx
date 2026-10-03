@@ -200,17 +200,19 @@ function SummaryRow({
 // Presentation Mapper:
 // Translates backend status into user-facing representation.
 function ApplicationStatus({ status }) {
-    const pending =
-        status === "PENDING_VALIDATION";
+    const map = {
+        REGISTERED: { cls: "badge-open", text: "Registrada" },
+        PENDING_VALIDATION: { cls: "badge-soon", text: "Pendiente Validación" },
+        APPROVED: { cls: "badge-open", text: "Aprobada" },
+        REJECTED: { cls: "badge-closed", text: "Rechazada" },
+        CANCELLED: { cls: "badge-closed", text: "Cancelada" },
+    };
+
+    const s = map[status] || { cls: "badge-open", text: status };
 
     return (
-        <span
-            className={`badge ${pending ? "badge-soon" : "badge-open"
-                }`}
-        >
-            {pending
-                ? "Pendiente Validación"
-                : status}
+        <span className={`badge ${s.cls}`}>
+            {s.text}
         </span>
     );
 }
