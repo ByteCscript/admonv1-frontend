@@ -4,8 +4,6 @@ phases:
   install:
     runtime-versions:
       nodejs: 20
-
-  pre_build:
     commands:
       - echo "Installing dependencies..."
       - npm ci
@@ -14,11 +12,6 @@ phases:
     commands:
       - echo "Building frontend..."
       - npm run build
-
-  post_build:
-    commands:
-      - echo "Build completed successfully"
-      - ls -la dist
 
 artifacts:
   base-directory: dist
