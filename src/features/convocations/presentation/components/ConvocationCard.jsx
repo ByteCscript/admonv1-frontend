@@ -7,7 +7,10 @@ export default function ConvocationCard({
     convocation,
     onViewDetails,
 }) {
-    const isOpen = convocation.availableSlots > 0;
+    // Estado visible en tarjeta (D-h): nunca se lee `status` derivado,
+    // solo cupos y el cierre manual, para no romper con fechas vencidas.
+    const isOpen =
+        convocation.availableSlots > 0 && !convocation.closedManually;
 
     return (
         <div className="call-card" data-testid={`convocation-card-${convocation.id}`}>

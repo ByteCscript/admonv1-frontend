@@ -16,6 +16,9 @@ import ApplicationsPage from "./features/applications/presentation/pages/Applica
 import ApplicationDetailPage from "./features/applications/presentation/pages/ApplicationDetailPage";
 import LoginPage from "./features/auth/presentation/pages/LoginPage";
 import ProtectedRoute from "./features/auth/presentation/components/ProtectedRoute";
+import AdminCallsPage from "./features/admin/presentation/pages/AdminCallsPage";
+import CreateCallPage from "./features/admin/presentation/pages/CreateCallPage";
+import EditCallPage from "./features/admin/presentation/pages/EditCallPage";
 
 import "./App.css";
 
@@ -74,6 +77,34 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <ApplicationDetailPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Administration Routes (RN-06: ROLE_ADMIN only) */}
+        <Route
+          path="/admin/convocations"
+          element={
+            <ProtectedRoute requiredRole="ROLE_ADMIN">
+              <AdminCallsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/convocations/new"
+          element={
+            <ProtectedRoute requiredRole="ROLE_ADMIN">
+              <CreateCallPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/convocations/:id/edit"
+          element={
+            <ProtectedRoute requiredRole="ROLE_ADMIN">
+              <EditCallPage />
             </ProtectedRoute>
           }
         />

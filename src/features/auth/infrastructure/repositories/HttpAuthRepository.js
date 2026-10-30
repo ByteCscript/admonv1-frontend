@@ -17,11 +17,21 @@ export class HttpAuthRepository extends AuthRepository {
       token: data.token,
       type: data.type,
       expiresIn: data.expiresIn,
+      email: data.email,
+      name: data.name,
+      roles: data.roles,
     });
 
     // Storage Adapter:
-    // Persists the authenticated session token.
-    this.tokenStorage.save(session.token);
+    // Persists the authenticated session (token + profile + roles).
+    this.tokenStorage.save({
+      token: session.token,
+      type: session.type,
+      expiresIn: session.expiresIn,
+      email: session.email,
+      name: session.name,
+      roles: session.roles,
+    });
 
     return session;
   }
@@ -32,5 +42,22 @@ export class HttpAuthRepository extends AuthRepository {
 
   getToken() {
     return this.tokenStorage.get();
+  }
+
+  getSession() {
+    const stored = this.tokenStorage.getSession();
+
+    if (!stored) {
+      return null;
+    }
+
+    return new AuthSession({
+      token: stored.token,
+      type: stored.type,
+      expiresIn: stored.expiresIn,
+      email: stored.email,
+      name: stored.name,
+      roles: stored.roles,
+    });
   }
 }
