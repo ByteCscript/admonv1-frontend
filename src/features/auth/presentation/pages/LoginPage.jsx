@@ -16,11 +16,15 @@ export default function LoginPage() {
         event.preventDefault();
 
         try {
-            await login({ email, password });
+            const session = await login({ email, password });
 
             // Authentication Flow:
-            // Redirects after successful authentication.
-            navigate("/");
+            // Redirects after successful authentication (admin goes to its hub).
+            const roles = session?.roles ?? [];
+
+            navigate(
+                roles.includes("ROLE_ADMIN") ? "/admin/convocations" : "/",
+            );
         } catch {
             // Error state is managed by useLogin.
         }

@@ -12,4 +12,8 @@ export class AuthRepository {
   getToken() {
     throw new Error("Method getToken() not implemented");
   }
+
+  getSession() {
+    throw new Error("Method getSession() not implemented");
+  }
 }

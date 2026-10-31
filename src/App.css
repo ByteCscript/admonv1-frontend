@@ -520,3 +520,21 @@
   line-height: 1;
   margin-top: 2px;
 }
+/* ── Admin convocations (CU 1.1.4) ── */
+.admin-card-actions{gap:8px}
+.admin-card-actions .btn-card{width:auto;flex:1}
+.admin-card-actions .admin-delete-button{color:var(--red-500)}
+.admin-form-layout{grid-template-columns:minmax(0,720px)}
+.admin-empty{grid-column:1/-1;text-align:center;color:var(--gray-500);padding:40px}
+.admin-call-form .error-msg{padding:12px 16px;margin-bottom:8px;font-size:14px;justify-content:flex-start}
+.page-header .btn{align-self:center}
+.error-msg.admin-action-error{padding:14px 16px;margin-top:8px;font-size:14px;justify-content:flex-start;background:var(--red-100);border-radius:10px}
+
+.confirm-modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.45);display:flex;align-items:center;justify-content:center;padding:24px;z-index:200}
+.confirm-modal{background:var(--white);border-radius:16px;border:1px solid var(--gray-200);padding:28px;max-width:460px;width:100%;box-shadow:0 16px 48px rgba(0,0,0,.18)}
+.confirm-modal h3{font-size:18px;font-weight:700;color:var(--gray-900);margin-bottom:12px}
+.confirm-modal p{font-size:15px;color:var(--gray-600);line-height:1.6;margin-bottom:8px}
+.confirm-modal .confirm-modal-hint{font-size:13px;color:var(--gray-500)}
+.confirm-modal .error-msg{padding:12px 16px;margin-bottom:8px;font-size:14px;justify-content:flex-start}
+.btn-danger-solid{background:var(--red-500);color:var(--white)}
+.btn-danger-solid:hover:not(:disabled){filter:brightness(.92)}

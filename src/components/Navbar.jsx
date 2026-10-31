@@ -6,6 +6,12 @@ export default function Navbar() {
   const navigate = useNavigate();
   const loc = window.location.pathname;
 
+  // Session state:
+  // Profile/roles come from the login response (RN-06 gating).
+  const session = authRepository.getSession();
+  const roles = session?.roles ?? [];
+  const isAdmin = roles.includes("ROLE_ADMIN");
+
   const handleLogout = () => {
     // Authentication Flow:
     // Clears the current session and redirects to login.
@@ -60,12 +66,22 @@ export default function Navbar() {
         >
           Mis Postulaciones
         </button>
+
+        {isAdmin && (
+          <button
+            data-testid="nav-link-admin"
+            className={`nav-link ${loc.startsWith("/admin") ? "active" : ""}`}
+            onClick={() => navigate("/admin/convocations")}
+          >
+            Administrar Convocatorias
+          </button>
+        )}
       </div>
 
       <div className="nav-user">
         <div className="nav-user-info">
           <div className="nav-user-name">
-            {RESIDENT.name}
+            {session?.name || RESIDENT.name}
           </div>
 
           <div className="nav-user-apt">
