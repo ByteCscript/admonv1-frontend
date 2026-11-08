@@ -20,6 +20,8 @@ import AdminCallsPage from "./features/admin/presentation/pages/AdminCallsPage";
 import CreateCallPage from "./features/admin/presentation/pages/CreateCallPage";
 import EditCallPage from "./features/admin/presentation/pages/EditCallPage";
 import CallDrawPage from "./features/admin/presentation/pages/CallDrawPage";
+import AdminApplicationsPage from "./features/admin-applications/presentation/pages/AdminApplicationsPage";
+import AdminApplicationDetailPage from "./features/admin-applications/presentation/pages/AdminApplicationDetailPage";
 
 import "./App.css";
 
@@ -120,6 +122,24 @@ function AppRoutes() {
           }
         />
 
+        <Route
+          path="/admin/applications"
+          element={
+            <ProtectedRoute requiredRole="ROLE_ADMIN">
+              <AdminApplicationsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/applications/:id"
+          element={
+            <ProtectedRoute requiredRole="ROLE_ADMIN">
+              <AdminApplicationDetailPage />
+            </ProtectedRoute>
+          }
+        />
+
         {/* Default Route */}
         <Route
           path="/"
@@ -129,8 +149,6 @@ function AppRoutes() {
             </ProtectedRoute>
           }
         />
-
-
       </Routes>
     </div>
   );
