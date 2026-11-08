@@ -20,8 +20,10 @@ import AdminCallsPage from "./features/admin/presentation/pages/AdminCallsPage";
 import CreateCallPage from "./features/admin/presentation/pages/CreateCallPage";
 import EditCallPage from "./features/admin/presentation/pages/EditCallPage";
 import CallDrawPage from "./features/admin/presentation/pages/CallDrawPage";
+import CallDrawResultsPage from "./features/admin/presentation/pages/CallDrawResultsPage";
 import AdminApplicationsPage from "./features/admin-applications/presentation/pages/AdminApplicationsPage";
 import AdminApplicationDetailPage from "./features/admin-applications/presentation/pages/AdminApplicationDetailPage";
+import ResidentDrawResultsPage from "./features/convocations/presentation/pages/ResidentDrawResultsPage";
 
 import "./App.css";
 
@@ -118,6 +120,26 @@ function AppRoutes() {
           element={
             <ProtectedRoute requiredRole="ROLE_ADMIN">
               <CallDrawPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* CU 1.1.2 D4 · Resultados del sorteo (administrador) */}
+        <Route
+          path="/admin/calls/:id/draw/results"
+          element={
+            <ProtectedRoute requiredRole="ROLE_ADMIN">
+              <CallDrawResultsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* CU 1.1.2 D4 · Resultados del sorteo (residente autenticado) */}
+        <Route
+          path="/calls/:id/draw/results"
+          element={
+            <ProtectedRoute>
+              <ResidentDrawResultsPage />
             </ProtectedRoute>
           }
         />

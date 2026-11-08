@@ -97,6 +97,45 @@ export async function fetchDrawResult(id) {
   return await unwrap(response, "Error consultando el resultado del sorteo");
 }
 
+// Infrastructure Gateway: GET /api/calls/{id}/draw/results
+// CU 1.1.2 D4: listado de resultados del sorteo (residente y admin).
+export async function fetchDrawResults(id) {
+  const response = await authenticatedFetch(
+    `${BASE_URL}/calls/${id}/draw/results`,
+  );
+
+  return await unwrap(response, "Error consultando los resultados del sorteo");
+}
+
+// Infrastructure Gateway: GET /api/calls/{id}/draw/hash
+// CU 1.1.2 D3: huella de integridad del CSV exportado.
+export async function fetchDrawHash(id) {
+  const response = await authenticatedFetch(
+    `${BASE_URL}/calls/${id}/draw/hash`,
+  );
+
+  return await unwrap(response, "Error consultando la huella de integridad");
+}
+
+// Infrastructure Gateway: GET /api/admin/calls/{id}/draw/export
+// CU 1.1.2 D5: exporta el CSV del sorteo (solo ROLE_ADMIN). Devuelve un blob.
+export async function exportDrawCsvRequest(id) {
+  const response = await authenticatedFetch(
+    `${BASE_URL}/admin/calls/${id}/draw/export`,
+  );
+
+  if (!response.ok) {
+    const json = await response.json().catch(() => null);
+    const error = new Error(json?.message || "Error exportando el CSV del sorteo");
+
+    error.code = json?.error || null;
+    error.status = response.status;
+    throw error;
+  }
+
+  return await response.blob();
+}
+
 // Infrastructure Gateway: DELETE /api/calls/{id} (409 CALL_HAS_APPLICATIONS).
 export async function deleteCallRequest(id) {
   const response = await authenticatedFetch(`${BASE_URL}/calls/${id}`, {

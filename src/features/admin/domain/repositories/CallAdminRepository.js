@@ -39,4 +39,18 @@ export class CallAdminRepository {
   async getDrawResult() {
     throw new Error("Method getDrawResult() not implemented");
   }
+
+  // CU 1.1.2 · Resultados del sorteo (D4) y huella de integridad (D3).
+  async getDrawResults() {
+    throw new Error("Method getDrawResults() not implemented");
+  }
+
+  async getDrawHash() {
+    throw new Error("Method getDrawHash() not implemented");
+  }
+
+  // CU 1.1.2 · Exportar CSV del sorteo (D5).
+  async exportDrawCsv() {
+    throw new Error("Method exportDrawCsv() not implemented");
+  }
 }

@@ -9,6 +9,9 @@ import {
   fetchDrawPreview,
   executeDrawRequest,
   fetchDrawResult,
+  fetchDrawResults,
+  fetchDrawHash,
+  exportDrawCsvRequest,
 } from "../api/adminCalls.api";
 
 // Adapter Pattern:
@@ -48,5 +51,17 @@ export class HttpCallAdminRepository extends CallAdminRepository {
 
   async getDrawResult(id) {
     return await fetchDrawResult(id);
+  }
+
+  async getDrawResults(id) {
+    return await fetchDrawResults(id);
+  }
+
+  async getDrawHash(id) {
+    return await fetchDrawHash(id);
+  }
+
+  async exportDrawCsv(id) {
+    return await exportDrawCsvRequest(id);
   }
 }

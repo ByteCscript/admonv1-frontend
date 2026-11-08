@@ -38,3 +38,35 @@ export async function fetchConvocationById(id) {
 
   return json.data;
 }
+
+// Infrastructure Gateway: GET /api/calls/{id}/draw/results
+// CU 1.1.2 D4: resultados del sorteo visibles para el residente autenticado.
+export async function fetchResidentDrawResults(id) {
+  const response = await authenticatedFetch(
+    `${BASE_URL}/calls/${id}/draw/results`,
+  );
+
+  if (!response.ok) {
+    throw new Error(`Error loading draw results: ${response.status}`);
+  }
+
+  const json = await response.json();
+
+  return json.data;
+}
+
+// Infrastructure Gateway: GET /api/calls/{id}/draw/hash
+// CU 1.1.2 D3: huella de integridad del CSV del sorteo.
+export async function fetchResidentDrawHash(id) {
+  const response = await authenticatedFetch(
+    `${BASE_URL}/calls/${id}/draw/hash`,
+  );
+
+  if (!response.ok) {
+    throw new Error(`Error loading draw hash: ${response.status}`);
+  }
+
+  const json = await response.json();
+
+  return json.data;
+}
