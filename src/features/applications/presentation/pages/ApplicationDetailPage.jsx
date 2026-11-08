@@ -165,6 +165,7 @@ export default function ApplicationDetailPage() {
                     >
                         <ApplicationStatus
                             status={application.status}
+                            waitlistPosition={application.waitlistPosition}
                             showMessage
                         />
                     </div>

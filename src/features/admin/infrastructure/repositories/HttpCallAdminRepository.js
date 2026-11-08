@@ -6,6 +6,9 @@ import {
   closeCallRequest,
   reopenCallRequest,
   deleteCallRequest,
+  fetchDrawPreview,
+  executeDrawRequest,
+  fetchDrawResult,
 } from "../api/adminCalls.api";
 
 // Adapter Pattern:
@@ -33,5 +36,17 @@ export class HttpCallAdminRepository extends CallAdminRepository {
 
   async remove(id) {
     return await deleteCallRequest(id);
+  }
+
+  async getDrawPreview(id) {
+    return await fetchDrawPreview(id);
+  }
+
+  async executeDraw(id) {
+    return await executeDrawRequest(id);
+  }
+
+  async getDrawResult(id) {
+    return await fetchDrawResult(id);
   }
 }

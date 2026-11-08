@@ -19,6 +19,7 @@ import ProtectedRoute from "./features/auth/presentation/components/ProtectedRou
 import AdminCallsPage from "./features/admin/presentation/pages/AdminCallsPage";
 import CreateCallPage from "./features/admin/presentation/pages/CreateCallPage";
 import EditCallPage from "./features/admin/presentation/pages/EditCallPage";
+import CallDrawPage from "./features/admin/presentation/pages/CallDrawPage";
 
 import "./App.css";
 
@@ -105,6 +106,16 @@ function AppRoutes() {
           element={
             <ProtectedRoute requiredRole="ROLE_ADMIN">
               <EditCallPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* C.U-08 · Ejecutar sorteo de cupos (ROLE_ADMIN only) */}
+        <Route
+          path="/admin/convocations/:id/draw"
+          element={
+            <ProtectedRoute requiredRole="ROLE_ADMIN">
+              <CallDrawPage />
             </ProtectedRoute>
           }
         />

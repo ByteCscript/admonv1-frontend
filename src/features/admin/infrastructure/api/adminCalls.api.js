@@ -69,6 +69,34 @@ export async function reopenCallRequest(id) {
   return await unwrap(response, "Error reabriendo la convocatoria");
 }
 
+// Infrastructure Gateway: GET /api/calls/{id}/draw/preview
+// C.U-08 paso 2 y FA-01: cupos, solicitudes por estado y si se puede sortear.
+export async function fetchDrawPreview(id) {
+  const response = await authenticatedFetch(
+    `${BASE_URL}/calls/${id}/draw/preview`,
+  );
+
+  return await unwrap(response, "Error consultando el resumen del sorteo");
+}
+
+// Infrastructure Gateway: POST /api/calls/{id}/draw
+// C.U-08 pasos 6-11: ejecuta el sorteo (definitivo, RN-19).
+export async function executeDrawRequest(id) {
+  const response = await authenticatedFetch(`${BASE_URL}/calls/${id}/draw`, {
+    method: "POST",
+  });
+
+  return await unwrap(response, "Error ejecutando el sorteo");
+}
+
+// Infrastructure Gateway: GET /api/calls/{id}/draw
+// C.U-08 paso 13 y FA-03: resultado y auditoría (RN-20, RN-21).
+export async function fetchDrawResult(id) {
+  const response = await authenticatedFetch(`${BASE_URL}/calls/${id}/draw`);
+
+  return await unwrap(response, "Error consultando el resultado del sorteo");
+}
+
 // Infrastructure Gateway: DELETE /api/calls/{id} (409 CALL_HAS_APPLICATIONS).
 export async function deleteCallRequest(id) {
   const response = await authenticatedFetch(`${BASE_URL}/calls/${id}`, {

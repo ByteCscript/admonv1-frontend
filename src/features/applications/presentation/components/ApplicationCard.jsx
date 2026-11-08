@@ -39,6 +39,12 @@ export default function ApplicationCard({
                 <StatusBadge
                     status={application.status}
                 />
+
+                {application.waitlistPosition && (
+                    <span className="app-row-waitlist">
+                        Posición {application.waitlistPosition} en espera
+                    </span>
+                )}
             </div>
         </div>
     );

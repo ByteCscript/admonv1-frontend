@@ -1,12 +1,18 @@
 // Presentational Component:
 // Renders one call with its administration actions (RN-06/RN-08).
+// C.U-08: closed calls offer the slot draw; a drawn call can no longer be
+// edited or reopened (RN-19).
 export default function AdminCallCard({
   call,
   onEdit,
   onToggleClose,
   onDelete,
+  onDraw,
   busy = false,
 }) {
+  const isClosed = call.closedManually || call.status === "CLOSED";
+  const drawn = Boolean(call.drawExecuted);
+
   // Badge text: manual close always wins; otherwise the derived status.
   const status = call.closedManually
     ? "Cerrada"
@@ -41,6 +47,15 @@ export default function AdminCallCard({
           <span className="call-card-slots">
             👤 {call.availableSlots} cupos disponibles
           </span>
+
+          {drawn && (
+            <span
+              className="admin-drawn-badge"
+              data-testid={`admin-drawn-badge-${call.id}`}
+            >
+              ✓ Sorteada
+            </span>
+          )}
         </div>
 
         <div className="call-card-title">{call.title}</div>
@@ -56,7 +71,7 @@ export default function AdminCallCard({
             type="button"
             className="btn-card"
             data-testid={`admin-edit-button-${call.id}`}
-            disabled={busy || call.closedManually}
+            disabled={busy || call.closedManually || drawn}
             onClick={onEdit}
           >
             Editar
@@ -66,11 +81,24 @@ export default function AdminCallCard({
             type="button"
             className="btn-card"
             data-testid={`admin-close-button-${call.id}`}
-            disabled={busy}
+            disabled={busy || drawn}
+            title={drawn ? "La convocatoria ya fue sorteada" : undefined}
             onClick={onToggleClose}
           >
             {closeLabel}
           </button>
+
+          {isClosed && (
+            <button
+              type="button"
+              className="btn-card"
+              data-testid={`admin-draw-button-${call.id}`}
+              disabled={busy}
+              onClick={onDraw}
+            >
+              {drawn ? "Ver sorteo" : "Sorteo"}
+            </button>
+          )}
 
           <button
             type="button"

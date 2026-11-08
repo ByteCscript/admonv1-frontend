@@ -206,6 +206,8 @@ function ApplicationStatus({ status }) {
         APPROVED: { cls: "badge-open", text: "Aprobada" },
         REJECTED: { cls: "badge-closed", text: "Rechazada" },
         CANCELLED: { cls: "badge-closed", text: "Cancelada" },
+        SELECTED: { cls: "badge-open", text: "Seleccionada" },
+        NOT_SELECTED: { cls: "badge-soon", text: "Lista de espera" },
     };
 
     const s = map[status] || { cls: "badge-open", text: status };

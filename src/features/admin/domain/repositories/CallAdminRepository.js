@@ -26,4 +26,17 @@ export class CallAdminRepository {
   async remove() {
     throw new Error("Method remove() not implemented");
   }
+
+  // C.U-08 · Ejecutar sorteo de cupos.
+  async getDrawPreview() {
+    throw new Error("Method getDrawPreview() not implemented");
+  }
+
+  async executeDraw() {
+    throw new Error("Method executeDraw() not implemented");
+  }
+
+  async getDrawResult() {
+    throw new Error("Method getDrawResult() not implemented");
+  }
 }
