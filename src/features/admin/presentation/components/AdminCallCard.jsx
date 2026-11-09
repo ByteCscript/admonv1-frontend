@@ -45,7 +45,7 @@ export default function AdminCallCard({
           </span>
 
           <span className="call-card-slots">
-            👤 {call.availableSlots} cupos disponibles
+            👤 {call.totalSlots} cupos
           </span>
 
           {drawn && (

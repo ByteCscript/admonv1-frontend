@@ -5,7 +5,7 @@ const EMPTY_VALUES = {
   description: "",
   startDate: "",
   endDate: "",
-  availableSlots: "",
+  totalSlots: "",
 };
 
 function toPayload(values) {
@@ -14,7 +14,7 @@ function toPayload(values) {
     description: values.description,
     startDate: values.startDate,
     endDate: values.endDate,
-    availableSlots: Number(values.availableSlots),
+    totalSlots: Number(values.totalSlots),
   };
 }
 
@@ -31,8 +31,8 @@ function validate(values) {
     return "La fecha de inicio no puede ser posterior a la fecha de fin.";
   }
 
-  if (!values.availableSlots || Number(values.availableSlots) < 1) {
-    return "Los cupos disponibles deben ser al menos 1.";
+  if (!values.totalSlots || Number(values.totalSlots) < 1) {
+    return "Los cupos deben ser al menos 1.";
   }
 
   return null;
@@ -134,14 +134,14 @@ export default function CallForm({
       </div>
 
       <div className="form-group">
-        <label htmlFor="call-slots">Cupos disponibles</label>
+        <label htmlFor="call-slots">Cupos</label>
 
         <input
           id="call-slots"
           type="number"
           min="1"
-          value={values.availableSlots}
-          onChange={handleChange("availableSlots")}
+          value={values.totalSlots}
+          onChange={handleChange("totalSlots")}
           placeholder="200"
           data-testid="admin-call-form-slots"
           required

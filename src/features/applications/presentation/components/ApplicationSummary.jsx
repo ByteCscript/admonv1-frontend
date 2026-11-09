@@ -201,7 +201,6 @@ function SummaryRow({
 // Translates backend status into user-facing representation.
 function ApplicationStatus({ status }) {
     const map = {
-        REGISTERED: { cls: "badge-open", text: "Registrada" },
         PENDING_VALIDATION: { cls: "badge-soon", text: "Pendiente Validación" },
         APPROVED: { cls: "badge-open", text: "Aprobada" },
         REJECTED: { cls: "badge-closed", text: "Rechazada" },

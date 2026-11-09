@@ -23,11 +23,11 @@ export default function ConvocationInfo({
 
             <div className="spec-item">
                 <div className="spec-label">
-                    Cupos Disponibles
+                    Cupos
                 </div>
 
                 <div className="spec-value">
-                    {convocation.availableSlots}
+                    {convocation.totalSlots}
                 </div>
             </div>
         </div>

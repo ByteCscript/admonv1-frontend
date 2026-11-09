@@ -13,6 +13,8 @@ export default function ConfirmDrawModal({
     return null;
   }
 
+  const direct = preview.directAssignment;
+
   return (
     <div className="confirm-modal-overlay" role="presentation">
       <div
@@ -22,24 +24,30 @@ export default function ConfirmDrawModal({
         aria-labelledby="draw-modal-title"
         data-testid="draw-confirm-modal"
       >
-        <h3 id="draw-modal-title">Ejecutar sorteo</h3>
+        <h3 id="draw-modal-title">
+          {direct ? "Asignar cupos" : "Ejecutar sorteo"}
+        </h3>
 
-        <p>
-          Se sortearán <strong>{preview.availableSlots} cupos</strong> entre{" "}
-          <strong>{preview.approvedCount} solicitudes aprobadas</strong> de{" "}
-          <strong>{preview.callTitle}</strong>.
-        </p>
-
-        <p className="confirm-modal-hint">
-          El sorteo es definitivo: no se puede repetir y la convocatoria ya no
-          podrá reabrirse ni editarse.
-        </p>
-
-        {preview.unvalidatedCount > 0 && (
-          <p className="confirm-modal-hint">
-            {preview.unvalidatedCount} solicitudes sin validar no participarán.
+        {direct ? (
+          <p>
+            Las <strong>{preview.approvedCount} solicitudes aprobadas</strong>{" "}
+            de <strong>{preview.callTitle}</strong> quedarán con cupo asignado.
+            Hay <strong>{preview.totalSlots} cupos</strong>, suficientes
+            para todas.
+          </p>
+        ) : (
+          <p>
+            Se sortearán <strong>{preview.totalSlots} cupos</strong> entre{" "}
+            <strong>{preview.approvedCount} solicitudes aprobadas</strong> de{" "}
+            <strong>{preview.callTitle}</strong>.
           </p>
         )}
+
+        <p className="confirm-modal-hint">
+          {direct ? "La asignación es definitiva" : "El sorteo es definitivo"}:
+          no se puede repetir y la convocatoria ya no podrá reabrirse ni
+          editarse.
+        </p>
 
         {error && (
           <div className="error-msg" data-testid="draw-confirm-error">
@@ -64,7 +72,9 @@ export default function ConfirmDrawModal({
             onClick={onConfirm}
             disabled={loading}
           >
-            {loading ? "Sorteando..." : "Confirmar sorteo"}
+            {direct
+              ? loading ? "Asignando..." : "Confirmar asignación"
+              : loading ? "Sorteando..." : "Confirmar sorteo"}
           </button>
         </div>
       </div>

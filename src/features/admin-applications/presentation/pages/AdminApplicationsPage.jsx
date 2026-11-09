@@ -58,10 +58,12 @@ export default function AdminApplicationsPage() {
             onChange={(e) => handleFilterChange("status", e.target.value)}
           >
             <option value="">Todos</option>
-            <option value="REGISTERED">Registrada</option>
+            <option value="PENDING_VALIDATION">Pendiente de validación</option>
             <option value="APPROVED">Aprobada</option>
             <option value="REJECTED">Rechazada</option>
             <option value="CANCELLED">Cancelada</option>
+            <option value="SELECTED">Seleccionada</option>
+            <option value="NOT_SELECTED">Lista de espera</option>
           </select>
         </label>
         <button

@@ -1,4 +1,5 @@
 import Tooltip from "../../../../components/Tooltip";
+import { convocationStatusView } from "../../domain/entities/Convocation";
 
 // Presentational Component Pattern:
 // Renders convocation information without infrastructure dependencies.
@@ -8,15 +9,12 @@ import Tooltip from "../../../../components/Tooltip";
 export default function ConvocationInfo({
     convocation,
 }) {
-    const isOpen = convocation.availableSlots > 0;
+    const statusView = convocationStatusView(convocation);
 
     return (
         <>
-            <span
-                className={`badge ${isOpen ? "badge-open" : "badge-closed"
-                    }`}
-            >
-                {isOpen ? "Abierta" : "Cerrada"}
+            <span className={`badge ${statusView.badgeClass}`}>
+                {statusView.label}
             </span>
 
             <h1
@@ -35,23 +33,23 @@ export default function ConvocationInfo({
             <div className="spec-grid">
                 <div className="spec-item">
                     <div className="spec-label">
-                        Cupos Disponibles
-                        <Tooltip text="Número de espacios que aún pueden ser asignados en esta convocatoria." />
+                        Cupos
+                        <Tooltip text="Número de cupos de parqueadero que se asignarán en esta convocatoria. No cambia al registrar o aprobar postulaciones." />
                     </div>
 
                     <div className="spec-value">
-                        {convocation.availableSlots}
+                        {convocation.totalSlots}
                     </div>
                 </div>
 
                 <div className="spec-item">
                     <div className="spec-label">
                         Estado
-                        <Tooltip text="Una convocatoria abierta acepta nuevas postulaciones; al agotarse los cupos pasa a cerrada y no se reciben más postulaciones." />
+                        <Tooltip text="Una convocatoria abierta acepta postulaciones hasta su fecha de cierre. Después, los cupos se asignan entre las postulaciones aprobadas: por sorteo si son más que los cupos, o directamente si hay cupos para todas." />
                     </div>
 
                     <div className="spec-value">
-                        {isOpen ? "Abierta" : "Cerrada"}
+                        {statusView.label}
                     </div>
                 </div>
             </div>

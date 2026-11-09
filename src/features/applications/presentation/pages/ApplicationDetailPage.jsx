@@ -54,7 +54,7 @@ export default function ApplicationDetailPage() {
         return null;
     }
 
-    // Cancellation is only offered while the application is still registered
+    // Cancellation is only offered while the application is pending validation
     // and the convocation period is open (same rule the backend enforces).
     const isCallPeriodOpen = (() => {
         const { callStartDate, callEndDate } = application;
@@ -72,7 +72,7 @@ export default function ApplicationDetailPage() {
     })();
 
     const isCancellable =
-        application.status === "REGISTERED" && isCallPeriodOpen;
+        application.status === "PENDING_VALIDATION" && isCallPeriodOpen;
 
     const openCancelModal = () => {
         setCancelError(null);
@@ -166,6 +166,7 @@ export default function ApplicationDetailPage() {
                         <ApplicationStatus
                             status={application.status}
                             waitlistPosition={application.waitlistPosition}
+                            rejectionReason={application.rejectionReason}
                             showMessage
                         />
                     </div>

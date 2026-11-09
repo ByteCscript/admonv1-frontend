@@ -32,8 +32,8 @@ export default function AdminApplicationDetailPage() {
   if (error) return <ErrorMessage>{error}</ErrorMessage>;
   if (!app) return null;
 
-  const canAccept = app.status === "REGISTERED" && !app.callDrawn;
-  const canReject = app.status === "REGISTERED" || app.status === "APPROVED";
+  const canAccept = app.status === "PENDING_VALIDATION" && !app.callDrawn;
+  const canReject = (app.status === "PENDING_VALIDATION" || app.status === "APPROVED") && !app.callDrawn;
 
   const handleAccept = async () => {
     try {
@@ -66,7 +66,7 @@ export default function AdminApplicationDetailPage() {
       }));
       setRejectOpen(false);
       navigate("/admin/applications"); // N1: redirección automática tras rechazar
-    } catch {
+    } catch (e) {
       setModalError(e.message || "No se pudo rechazar la postulacion");
     }
   };
@@ -111,8 +111,8 @@ export default function AdminApplicationDetailPage() {
               <span>{`${app.callStartDate || "—"} → ${app.callEndDate || "—"}`}</span>
             </div>
             <div className="summary-row">
-              <span className="summary-label">Cupos restantes</span>
-              <span>{app.callAvailableSlots ?? "—"}</span>
+              <span className="summary-label">Cupos de la convocatoria</span>
+              <span>{app.callTotalSlots ?? "—"}</span>
             </div>
             <div className="summary-row">
               <span className="summary-label">Residente</span>
@@ -133,6 +133,9 @@ export default function AdminApplicationDetailPage() {
           </div>
 
           <h2 style={{ marginTop: 24 }}>Documentos</h2>
+          <p className="draw-help" data-testid="admin-application-review-criteria">
+            Acepte la solicitud solo después de validar los documentos cargados por el residente.
+          </p>
           <div className="admin-detail-docs" data-testid="admin-application-detail-docs">
             {!app.documents || app.documents.length === 0 ? (
               <p className="admin-empty">Sin documentos adjuntos.</p>

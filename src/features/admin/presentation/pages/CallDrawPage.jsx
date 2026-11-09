@@ -8,7 +8,6 @@ import { Loading, ErrorMessage } from "../../../../components/UI";
 
 const STATUS_LABELS = {
   APPROVED: "Aprobadas",
-  REGISTERED: "Registradas",
   PENDING_VALIDATION: "Pendientes de validación",
   REJECTED: "Rechazadas",
   CANCELLED: "Canceladas",
@@ -81,7 +80,20 @@ export default function CallDrawPage() {
       </div>
 
       {result ? (
-        <DrawResult result={result} />
+        <>
+          <DrawResult result={result} />
+
+          <div className="form-actions">
+            <button
+              type="button"
+              className="btn btn-primary"
+              data-testid="draw-view-results-button"
+              onClick={() => navigate(`/admin/calls/${id}/draw/results`)}
+            >
+              Ver resultados y exportar CSV
+            </button>
+          </div>
+        </>
       ) : (
         <DrawPreview
           preview={preview}
@@ -110,9 +122,9 @@ function DrawPreview({ preview, onExecute }) {
 
       <div className="summary-table">
         <div className="summary-row">
-          <span className="summary-label">Cupos a sortear</span>
+          <span className="summary-label">Cupos</span>
           <span className="summary-value" data-testid="draw-preview-slots">
-            {preview.availableSlots}
+            {preview.totalSlots}
           </span>
         </div>
 
@@ -137,13 +149,13 @@ function DrawPreview({ preview, onExecute }) {
           ))}
       </div>
 
-      {preview.unvalidatedCount > 0 && (
-        <div className="warning-box" data-testid="draw-unvalidated-warning">
-          <span className="warning-icon" aria-hidden="true">⚠️</span>
+      {preview.directAssignment && (
+        <div className="info-box" data-testid="draw-direct-assignment-info">
+          <span className="info-box-icon" aria-hidden="true">ℹ️</span>
           <span>
-            Hay {preview.unvalidatedCount} solicitudes sin validar. Si ejecuta
-            el sorteo ahora, no participarán. Si deben participar, valídelas
-            antes de ejecutar el sorteo.
+            Hay {preview.totalSlots} cupos para {preview.approvedCount}{" "}
+            solicitudes aprobadas. No hay competencia: todas quedarán con cupo
+            asignado y no habrá lista de espera.
           </span>
         </div>
       )}
@@ -162,7 +174,7 @@ function DrawPreview({ preview, onExecute }) {
           disabled={!preview.canExecute}
           onClick={onExecute}
         >
-          Ejecutar sorteo
+          {preview.directAssignment ? "Asignar cupos" : "Ejecutar sorteo"}
         </button>
       </div>
     </div>
@@ -173,8 +185,10 @@ function blockingMessageFor(preview) {
   switch (preview.blockingError) {
     case "CALL_NOT_CLOSED":
       return "La convocatoria debe estar cerrada para ejecutar el sorteo. Ciérrela desde la lista de convocatorias.";
-    case "INSUFFICIENT_APPROVED_APPLICATIONS":
-      return `Hay ${preview.approvedCount} solicitudes aprobadas y ${preview.availableSlots} cupos. Las solicitudes aprobadas deben superar el número de cupos.`;
+    case "APPLICATIONS_PENDING_VALIDATION":
+      return `Hay ${preview.unvalidatedCount} solicitudes pendientes de validación. Apruébelas o rechácelas desde Revisar Postulaciones antes de ejecutar el sorteo.`;
+    case "NO_APPROVED_APPLICATIONS":
+      return "No hay solicitudes aprobadas. Apruebe al menos una para poder asignar los cupos.";
     case null:
     case undefined:
       return null;

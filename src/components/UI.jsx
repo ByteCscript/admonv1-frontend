@@ -1,7 +1,6 @@
 export function StatusBadge({ status }) {
   const map = {
-    REGISTERED: { cls: "badge-open", text: "Registrada" },
-    PENDING_VALIDATION: { cls: "badge-soon", text: "Pendiente" },
+    PENDING_VALIDATION: { cls: "badge-soon", text: "Pendiente de validación" },
     APPROVED: { cls: "badge-open", text: "Aprobada" },
     REJECTED: { cls: "badge-closed", text: "Rechazada" },
     CANCELLED: { cls: "badge-closed", text: "Cancelada" },

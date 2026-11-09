@@ -13,10 +13,10 @@ export default function AdminRejectModal({ open, application, error, loading, on
           ¿Desea rechazar la postulación <strong>{application.applicationNumber}</strong>?
         </p>
         <p className="confirm-modal-hint">
-          Si la postulación estaba aprobada, el cupo se devuelve a la convocatoria.
+          Si la postulación estaba aprobada, dejará de participar en el sorteo.
         </p>
         <label className="admin-reject-label" htmlFor="admin-reject-reason">
-          Motivo (opcional)
+          Motivo (el residente lo verá en su solicitud)
         </label>
         <textarea
           id="admin-reject-reason"
@@ -44,7 +44,7 @@ export default function AdminRejectModal({ open, application, error, loading, on
             className="btn btn-danger-solid"
             data-testid="admin-reject-confirm"
             onClick={() => onConfirm(reason)}
-            disabled={loading}
+            disabled={loading || !reason.trim()}
           >
             {loading ? "Rechazando..." : "Rechazar"}
           </button>
