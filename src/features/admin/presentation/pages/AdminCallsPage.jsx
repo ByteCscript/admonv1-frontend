@@ -81,7 +81,8 @@ export default function AdminCallsPage() {
           <div>
             <h1>Administrar Convocatorias</h1>
             <p>
-              Publique, edite, cierre o elimine las convocatorias del conjunto.
+              Publique, edite, cierre o elimine las convocatorias del conjunto,
+              y ejecute el sorteo de cupos de las convocatorias cerradas.
             </p>
           </div>
 
@@ -110,6 +111,7 @@ export default function AdminCallsPage() {
             busy={busyId === call.id}
             onEdit={() => navigate(`/admin/convocations/${call.id}/edit`)}
             onToggleClose={() => handleToggleClose(call)}
+            onDraw={() => navigate(`/admin/convocations/${call.id}/draw`)}
             onDelete={() => {
               setDeleteError(null);
               setCallToDelete(call);

@@ -69,6 +69,73 @@ export async function reopenCallRequest(id) {
   return await unwrap(response, "Error reabriendo la convocatoria");
 }
 
+// Infrastructure Gateway: GET /api/calls/{id}/draw/preview
+// C.U-08 paso 2 y FA-01: cupos, solicitudes por estado y si se puede sortear.
+export async function fetchDrawPreview(id) {
+  const response = await authenticatedFetch(
+    `${BASE_URL}/calls/${id}/draw/preview`,
+  );
+
+  return await unwrap(response, "Error consultando el resumen del sorteo");
+}
+
+// Infrastructure Gateway: POST /api/calls/{id}/draw
+// C.U-08 pasos 6-11: ejecuta el sorteo (definitivo, RN-19).
+export async function executeDrawRequest(id) {
+  const response = await authenticatedFetch(`${BASE_URL}/calls/${id}/draw`, {
+    method: "POST",
+  });
+
+  return await unwrap(response, "Error ejecutando el sorteo");
+}
+
+// Infrastructure Gateway: GET /api/calls/{id}/draw
+// C.U-08 paso 13 y FA-03: resultado y auditoría (RN-20, RN-21).
+export async function fetchDrawResult(id) {
+  const response = await authenticatedFetch(`${BASE_URL}/calls/${id}/draw`);
+
+  return await unwrap(response, "Error consultando el resultado del sorteo");
+}
+
+// Infrastructure Gateway: GET /api/calls/{id}/draw/results
+// CU 1.1.2 D4: listado de resultados del sorteo (residente y admin).
+export async function fetchDrawResults(id) {
+  const response = await authenticatedFetch(
+    `${BASE_URL}/calls/${id}/draw/results`,
+  );
+
+  return await unwrap(response, "Error consultando los resultados del sorteo");
+}
+
+// Infrastructure Gateway: GET /api/calls/{id}/draw/hash
+// CU 1.1.2 D3: huella de integridad del CSV exportado.
+export async function fetchDrawHash(id) {
+  const response = await authenticatedFetch(
+    `${BASE_URL}/calls/${id}/draw/hash`,
+  );
+
+  return await unwrap(response, "Error consultando la huella de integridad");
+}
+
+// Infrastructure Gateway: GET /api/admin/calls/{id}/draw/export
+// CU 1.1.2 D5: exporta el CSV del sorteo (solo ROLE_ADMIN). Devuelve un blob.
+export async function exportDrawCsvRequest(id) {
+  const response = await authenticatedFetch(
+    `${BASE_URL}/admin/calls/${id}/draw/export`,
+  );
+
+  if (!response.ok) {
+    const json = await response.json().catch(() => null);
+    const error = new Error(json?.message || "Error exportando el CSV del sorteo");
+
+    error.code = json?.error || null;
+    error.status = response.status;
+    throw error;
+  }
+
+  return await response.blob();
+}
+
 // Infrastructure Gateway: DELETE /api/calls/{id} (409 CALL_HAS_APPLICATIONS).
 export async function deleteCallRequest(id) {
   const response = await authenticatedFetch(`${BASE_URL}/calls/${id}`, {

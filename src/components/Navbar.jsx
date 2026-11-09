@@ -68,13 +68,22 @@ export default function Navbar() {
         </button>
 
         {isAdmin && (
-          <button
-            data-testid="nav-link-admin"
-            className={`nav-link ${loc.startsWith("/admin") ? "active" : ""}`}
-            onClick={() => navigate("/admin/convocations")}
-          >
-            Administrar Convocatorias
-          </button>
+          <>
+            <button
+              data-testid="nav-link-admin-calls"
+              className={`nav-link ${loc.startsWith("/admin/convocations") ? "active" : ""}`}
+              onClick={() => navigate("/admin/convocations")}
+            >
+              Administrar Convocatorias
+            </button>
+            <button
+              data-testid="nav-link-admin-applications"
+              className={`nav-link ${loc.startsWith("/admin/applications") ? "active" : ""}`}
+              onClick={() => navigate("/admin/applications")}
+            >
+              Gestionar Postulaciones
+            </button>
+          </>
         )}
       </div>
 
@@ -84,13 +93,15 @@ export default function Navbar() {
             {session?.name || RESIDENT.name}
           </div>
 
-          <div className="nav-user-apt">
-            {RESIDENT.apartment}
-          </div>
+          {!isAdmin && (
+            <div className="nav-apt">
+              {RESIDENT.apartment}
+            </div>
+          )}
         </div>
 
         <div className="nav-avatar">
-          CM
+          {isAdmin ? "ADM" : "CM"}
         </div>
 
         <button

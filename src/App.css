@@ -190,6 +190,18 @@
 .application-row{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;background:var(--white);border:1px solid var(--gray-200);border-radius:12px;cursor:pointer;transition:all .15s}
 .application-row:hover{border-color:var(--teal-600);box-shadow:0 2px 12px rgba(13,148,136,.08)}
 .app-row-main{display:flex;align-items:center;gap:16px}
+
+/* ── Admin applications list (CU 1.2.4, N7) ── */
+.admin-applications-list{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.admin-application-row{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;gap:16px;background:var(--white);border:1px solid var(--gray-200);border-radius:10px;cursor:pointer;transition:all .15s}
+.admin-application-row:hover{border-color:var(--teal-600);box-shadow:0 2px 10px rgba(13,148,136,.06)}
+.admin-application-main{display:flex;flex:1;align-items:center;gap:16px;min-width:0}
+.admin-application-title{display:flex;align-items:center;gap:10px;min-width:0}
+.admin-application-number{font-size:14px;font-weight:700;color:var(--teal-700);font-family:var(--mono,monospace);white-space:nowrap}
+.admin-application-meta{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--gray-500);min-width:0}
+.admin-application-meta span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-application-actions{display:flex;gap:8px;flex-shrink:0}
+.admin-application-actions button:hover:not(:disabled){opacity:.9;filter:brightness(1.05)}
 .app-row-number{font-size:15px;font-weight:700;color:var(--teal-700);font-family:var(--mono,monospace)}
 .app-row-call{font-size:15px;color:var(--gray-700)}
 .app-row-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--gray-500)}
@@ -538,3 +550,36 @@
 .confirm-modal .error-msg{padding:12px 16px;margin-bottom:8px;font-size:14px;justify-content:flex-start}
 .btn-danger-solid{background:var(--red-500);color:var(--white)}
 .btn-danger-solid:hover:not(:disabled){filter:brightness(.92)}
+
+/* ── C.U-08 Sorteo de cupos ── */
+.draw-section{margin-bottom:20px}
+.draw-section .form-actions{margin-top:24px}
+.draw-help{font-size:13px;color:var(--gray-500);line-height:1.5;margin-bottom:12px}
+.draw-blocking{margin-top:20px}
+.draw-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.draw-stat{background:var(--white);border:1px solid var(--gray-200);border-radius:12px;padding:16px;text-align:center}
+.draw-stat-value{font-size:28px;font-weight:700;color:var(--gray-900);font-variant-numeric:tabular-nums}
+.draw-stat-label{font-size:13px;color:var(--gray-500);margin-top:4px}
+.draw-table-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.draw-table{width:100%;border-collapse:collapse;font-size:14px}
+.draw-table th{text-align:left;font-size:12px;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.4px;padding:10px 12px;border-bottom:1px solid var(--gray-200);white-space:nowrap}
+.draw-table td{padding:12px;border-bottom:1px solid var(--gray-100);color:var(--gray-700);vertical-align:middle}
+.draw-table tr:last-child td{border-bottom:none}
+.draw-position{font-weight:700;color:var(--gray-900);font-variant-numeric:tabular-nums}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+.draw-break{word-break:break-all}
+.draw-audit-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.draw-audit-header .form-section-title{margin-bottom:0}
+.draw-audit-grid{display:grid;grid-template-columns:minmax(160px,auto) 1fr;gap:10px 20px;font-size:14px;margin:16px 0}
+.draw-audit-grid dt{color:var(--gray-500)}
+.draw-audit-grid dd{color:var(--gray-800);margin:0}
+.draw-input-list summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--teal-600)}
+.draw-input-list ol{margin:12px 0 0 24px;color:var(--gray-700);line-height:1.8}
+.admin-drawn-badge{font-size:12px;font-weight:600;color:var(--teal-700)}
+.app-row-waitlist{font-size:12px;color:var(--gray-500)}
+
+@media (max-width: 700px) {
+  .draw-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .draw-audit-grid{grid-template-columns:1fr;gap:2px}
+  .draw-audit-grid dd{margin-bottom:12px}
+}
