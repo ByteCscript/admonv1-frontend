@@ -1,4 +1,4 @@
-import { RESIDENT } from "../../../../constants";
+import { getCurrentResident } from "../../../../constants";
 import ApplicationStepper from "./ApplicationStepper";
 
 // Presentational Component Pattern:
@@ -12,6 +12,8 @@ export default function ApplicationSummary({
     files,
     onFinish,
 }) {
+    const resident = getCurrentResident();
+
     const uploadedFiles = files.filter(
         (file) => file.status === "done"
     );
@@ -43,15 +45,16 @@ export default function ApplicationSummary({
                             label="Residente"
                             value={
                                 result.residentName ||
-                                RESIDENT.name
+                                resident.name
                             }
                         />
 
                         <SummaryRow
                             label="Apartamento"
                             value={
-                                result.apartmentNumber ||
-                                RESIDENT.apartment
+                                result.apartmentNumber
+                                    ? `Apto ${result.apartmentNumber}${result.towerName ? `, ${result.towerName}` : ""}`
+                                    : resident.apartment
                             }
                         />
 

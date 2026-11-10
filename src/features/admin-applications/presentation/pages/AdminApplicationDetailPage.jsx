@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { Loading, ErrorMessage } from "../../../../components/UI";
 import useAdminApplicationDetail from "../hooks/useAdminApplicationDetail";
@@ -11,6 +11,10 @@ import AdminRejectModal from "../components/AdminRejectModal";
 // CU: Detalle de postulación para admin
 export default function AdminApplicationDetailPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  // Vuelve al listado con los filtros y la página de donde se abrió el detalle.
+  const listSearch = location.state?.listSearch || "";
+  const backToList = () => navigate(`/admin/applications${listSearch}`);
   const idFromPath = window.location.pathname.split("/").pop();
   const idFromQuery = new URLSearchParams(window.location.search).get("id");
   const id = idFromQuery || idFromPath;
@@ -43,7 +47,7 @@ export default function AdminApplicationDetailPage() {
         ...result,
         status: result?.status || "APPROVED",
       }));
-      navigate("/admin/applications"); // N1: redirección automática tras aceptar
+      backToList(); // N1: redirección automática tras aceptar
     } catch {
       // Errors are displayed via the hook's error state
     }
@@ -65,7 +69,7 @@ export default function AdminApplicationDetailPage() {
         rejectionReason: reason,
       }));
       setRejectOpen(false);
-      navigate("/admin/applications"); // N1: redirección automática tras rechazar
+      backToList(); // N1: redirección automática tras rechazar
     } catch (e) {
       setModalError(e.message || "No se pudo rechazar la postulacion");
     }
@@ -219,7 +223,7 @@ export default function AdminApplicationDetailPage() {
               type="button"
               className="btn btn-secondary"
               data-testid="admin-application-detail-back-button"
-              onClick={() => navigate("/admin/applications")}
+              onClick={backToList}
             >
               Volver
             </button>

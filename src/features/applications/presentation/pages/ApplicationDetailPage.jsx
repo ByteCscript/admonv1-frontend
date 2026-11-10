@@ -55,8 +55,13 @@ export default function ApplicationDetailPage() {
     }
 
     // Cancellation is only offered while the application is pending validation
-    // and the convocation period is open (same rule the backend enforces).
+    // and the convocation is open (same rule the backend enforces): a manual
+    // close also blocks changes, so the derived `callStatus` takes precedence.
     const isCallPeriodOpen = (() => {
+        if (application.callStatus) {
+            return application.callStatus === "OPEN";
+        }
+
         const { callStartDate, callEndDate } = application;
 
         // Without call dates the backend remains the source of truth.

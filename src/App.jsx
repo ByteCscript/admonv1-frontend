@@ -40,11 +40,11 @@ function AppRoutes() {
         {/* Public Route */}
         <Route path="/login" element={<LoginPage />} />
 
-        {/* Protected Routes */}
+        {/* Resident Routes (ROLE_RESIDENT only: the administrator does not apply) */}
         <Route
           path="/convocations"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="ROLE_RESIDENT">
               <ConvocationsPage />
             </ProtectedRoute>
           }
@@ -53,7 +53,7 @@ function AppRoutes() {
         <Route
           path="/convocations/:id"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="ROLE_RESIDENT">
               <ConvocationDetailPage />
             </ProtectedRoute>
           }
@@ -62,7 +62,7 @@ function AppRoutes() {
         <Route
           path="/convocations/:id/apply"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="ROLE_RESIDENT">
               <CreateApplicationPage />
             </ProtectedRoute>
           }
@@ -71,7 +71,7 @@ function AppRoutes() {
         <Route
           path="/mis-postulaciones"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="ROLE_RESIDENT">
               <ApplicationsPage />
             </ProtectedRoute>
           }
@@ -80,7 +80,7 @@ function AppRoutes() {
         <Route
           path="/applications/:id"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="ROLE_RESIDENT">
               <ApplicationDetailPage />
             </ProtectedRoute>
           }
@@ -134,11 +134,11 @@ function AppRoutes() {
           }
         />
 
-        {/* CU 1.1.2 D4 · Resultados del sorteo (residente autenticado) */}
+        {/* CU 1.1.2 D4 · Resultados del sorteo (residente, solo sus solicitudes) */}
         <Route
           path="/calls/:id/draw/results"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="ROLE_RESIDENT">
               <ResidentDrawResultsPage />
             </ProtectedRoute>
           }

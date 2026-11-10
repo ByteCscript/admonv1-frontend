@@ -5,7 +5,6 @@ import {
     ErrorMessage,
 } from "../../../../components/UI";
 
-import { RESIDENT } from "../../../../constants";
 import useApplications from "../hooks/useApplications";
 import ApplicationCard from "../components/ApplicationCard";
 
@@ -13,12 +12,13 @@ export default function ApplicationsPage() {
     const navigate = useNavigate();
 
     // Presentation abstraction:
-    // Retrieves only the logged resident's applications.
+    // Retrieves only the logged resident's applications
+    // (the backend scopes the list to the token's user).
     const {
         applications,
         loading,
         error,
-    } = useApplications({ residentId: RESIDENT.id });
+    } = useApplications();
 
     if (loading) {
         return <Loading />;
