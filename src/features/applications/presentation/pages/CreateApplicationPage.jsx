@@ -4,7 +4,7 @@ import {
     useParams,
 } from "react-router-dom";
 
-import { RESIDENT } from "../../../../constants";
+import { getCurrentResident } from "../../../../constants";
 import {
     Loading,
     ErrorMessage,
@@ -98,7 +98,6 @@ export default function CreateApplicationPage() {
             const application =
                 await createApplication({
                     convocationId: Number(id),
-                    residentId: RESIDENT.id,
                     documentIds: uploadedDocumentIds,
                 });
 
@@ -130,7 +129,7 @@ export default function CreateApplicationPage() {
                         Información de la Postulación
                     </h2>
 
-                    <ResidentInfo resident={RESIDENT} />
+                    <ResidentInfo resident={getCurrentResident()} />
 
                     <ConvocationInfo
                         convocation={convocation}

@@ -25,7 +25,7 @@ export default function CreateCallPage() {
         <div className="page-header-row">
           <div>
             <h1>Nueva Convocatoria</h1>
-            <p>Defina el periodo y los cupos disponibles de la convocatoria.</p>
+            <p>Defina el periodo y los cupos de la convocatoria.</p>
           </div>
         </div>
       </div>

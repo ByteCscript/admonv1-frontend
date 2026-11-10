@@ -583,3 +583,10 @@
   .draw-audit-grid{grid-template-columns:1fr;gap:2px}
   .draw-audit-grid dd{margin-bottom:12px}
 }
+
+/* Revisar Postulaciones (admin): filtros, total y paginación */
+.admin-filters{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;margin-bottom:16px}
+.admin-filter-field{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--gray-600)}
+.admin-filter-field select{min-width:200px;padding:8px 12px;border:1px solid var(--gray-200);border-radius:8px;background:var(--white);font-size:14px;color:var(--gray-700)}
+.admin-total{color:var(--gray-500);font-size:14px;margin:0 0 4px}
+.admin-pagination{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:20px;font-size:14px;color:var(--gray-600)}

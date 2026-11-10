@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { Loading, ErrorMessage } from "../../../../components/UI";
 import useAdminApplicationDetail from "../hooks/useAdminApplicationDetail";
@@ -11,6 +11,10 @@ import AdminRejectModal from "../components/AdminRejectModal";
 // CU: Detalle de postulación para admin
 export default function AdminApplicationDetailPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  // Vuelve al listado con los filtros y la página de donde se abrió el detalle.
+  const listSearch = location.state?.listSearch || "";
+  const backToList = () => navigate(`/admin/applications${listSearch}`);
   const idFromPath = window.location.pathname.split("/").pop();
   const idFromQuery = new URLSearchParams(window.location.search).get("id");
   const id = idFromQuery || idFromPath;
@@ -32,8 +36,8 @@ export default function AdminApplicationDetailPage() {
   if (error) return <ErrorMessage>{error}</ErrorMessage>;
   if (!app) return null;
 
-  const canAccept = app.status === "REGISTERED" && !app.callDrawn;
-  const canReject = app.status === "REGISTERED" || app.status === "APPROVED";
+  const canAccept = app.status === "PENDING_VALIDATION" && !app.callDrawn;
+  const canReject = (app.status === "PENDING_VALIDATION" || app.status === "APPROVED") && !app.callDrawn;
 
   const handleAccept = async () => {
     try {
@@ -43,7 +47,7 @@ export default function AdminApplicationDetailPage() {
         ...result,
         status: result?.status || "APPROVED",
       }));
-      navigate("/admin/applications"); // N1: redirección automática tras aceptar
+      backToList(); // N1: redirección automática tras aceptar
     } catch {
       // Errors are displayed via the hook's error state
     }
@@ -65,8 +69,8 @@ export default function AdminApplicationDetailPage() {
         rejectionReason: reason,
       }));
       setRejectOpen(false);
-      navigate("/admin/applications"); // N1: redirección automática tras rechazar
-    } catch {
+      backToList(); // N1: redirección automática tras rechazar
+    } catch (e) {
       setModalError(e.message || "No se pudo rechazar la postulacion");
     }
   };
@@ -111,8 +115,8 @@ export default function AdminApplicationDetailPage() {
               <span>{`${app.callStartDate || "—"} → ${app.callEndDate || "—"}`}</span>
             </div>
             <div className="summary-row">
-              <span className="summary-label">Cupos restantes</span>
-              <span>{app.callAvailableSlots ?? "—"}</span>
+              <span className="summary-label">Cupos de la convocatoria</span>
+              <span>{app.callTotalSlots ?? "—"}</span>
             </div>
             <div className="summary-row">
               <span className="summary-label">Residente</span>
@@ -133,6 +137,9 @@ export default function AdminApplicationDetailPage() {
           </div>
 
           <h2 style={{ marginTop: 24 }}>Documentos</h2>
+          <p className="draw-help" data-testid="admin-application-review-criteria">
+            Acepte la solicitud solo después de validar los documentos cargados por el residente.
+          </p>
           <div className="admin-detail-docs" data-testid="admin-application-detail-docs">
             {!app.documents || app.documents.length === 0 ? (
               <p className="admin-empty">Sin documentos adjuntos.</p>
@@ -216,7 +223,7 @@ export default function AdminApplicationDetailPage() {
               type="button"
               className="btn btn-secondary"
               data-testid="admin-application-detail-back-button"
-              onClick={() => navigate("/admin/applications")}
+              onClick={backToList}
             >
               Volver
             </button>

@@ -64,7 +64,7 @@ export default function EditCallPage() {
             description: call.description ?? "",
             startDate: call.startDate ?? "",
             endDate: call.endDate ?? "",
-            availableSlots: call.availableSlots ?? "",
+            totalSlots: call.totalSlots ?? "",
           }}
           submitLabel="Guardar cambios"
           loading={saving}

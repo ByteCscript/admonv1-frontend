@@ -13,14 +13,7 @@ export class HttpAuthRepository extends AuthRepository {
   async login(credentials) {
     const data = await loginRequest(credentials);
 
-    const session = new AuthSession({
-      token: data.token,
-      type: data.type,
-      expiresIn: data.expiresIn,
-      email: data.email,
-      name: data.name,
-      roles: data.roles,
-    });
+    const session = toSession(data);
 
     // Storage Adapter:
     // Persists the authenticated session (token + profile + roles).
@@ -31,6 +24,9 @@ export class HttpAuthRepository extends AuthRepository {
       email: session.email,
       name: session.name,
       roles: session.roles,
+      userId: session.userId,
+      apartmentNumber: session.apartmentNumber,
+      towerName: session.towerName,
     });
 
     return session;
@@ -51,13 +47,21 @@ export class HttpAuthRepository extends AuthRepository {
       return null;
     }
 
-    return new AuthSession({
-      token: stored.token,
-      type: stored.type,
-      expiresIn: stored.expiresIn,
-      email: stored.email,
-      name: stored.name,
-      roles: stored.roles,
-    });
+    return toSession(stored);
   }
+}
+
+// Mapper: backend login payload / stored JSON -> domain session.
+function toSession(data) {
+  return new AuthSession({
+    token: data.token,
+    type: data.type,
+    expiresIn: data.expiresIn,
+    email: data.email,
+    name: data.name,
+    roles: data.roles,
+    userId: data.userId,
+    apartmentNumber: data.apartmentNumber,
+    towerName: data.towerName,
+  });
 }

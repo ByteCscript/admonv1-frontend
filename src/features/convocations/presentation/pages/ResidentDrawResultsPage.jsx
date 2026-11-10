@@ -46,14 +46,15 @@ export default function ResidentDrawResultsPage() {
       <div className="page-header">
         <h1>Resultados del sorteo</h1>
         <p>
-          Listado de postulaciones sorteadas de esta convocatoria y su huella
-          de integridad.
+          Resultado de sus postulaciones en el sorteo de esta convocatoria y
+          huella de integridad del resultado completo.
         </p>
       </div>
 
       <DrawResultsTable
         results={results?.results ?? []}
         hash={results?.integrityHash ?? hash ?? null}
+        emptyMessage="No tiene postulaciones en el sorteo de esta convocatoria."
       />
     </div>
   );

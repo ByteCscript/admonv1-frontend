@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { RESIDENT } from "../constants";
 import { authRepository } from "../features/auth/auth.dependencies";
 
 export default function Navbar() {
@@ -41,31 +40,37 @@ export default function Navbar() {
           Inicio
         </button>
 
-        <button
-          data-testid="nav-link-convocations"
-          className={`nav-link ${loc.startsWith("/convocations")
-            ? "active"
-            : ""
-            }`}
-          onClick={() =>
-            navigate("/convocations")
-          }
-        >
-          Convocatorias
-        </button>
+        {/* Opciones del residente: el administrador no se postula,
+            así que no las ve (las rutas también exigen ROLE_RESIDENT). */}
+        {!isAdmin && (
+          <>
+            <button
+              data-testid="nav-link-convocations"
+              className={`nav-link ${loc.startsWith("/convocations")
+                ? "active"
+                : ""
+                }`}
+              onClick={() =>
+                navigate("/convocations")
+              }
+            >
+              Convocatorias
+            </button>
 
-        <button
-          data-testid="nav-link-applications"
-          className={`nav-link ${loc === "/mis-postulaciones"
-            ? "active"
-            : ""
-            }`}
-          onClick={() =>
-            navigate("/mis-postulaciones")
-          }
-        >
-          Mis Postulaciones
-        </button>
+            <button
+              data-testid="nav-link-applications"
+              className={`nav-link ${loc === "/mis-postulaciones"
+                ? "active"
+                : ""
+                }`}
+              onClick={() =>
+                navigate("/mis-postulaciones")
+              }
+            >
+              Mis Postulaciones
+            </button>
+          </>
+        )}
 
         {isAdmin && (
           <>
@@ -90,18 +95,18 @@ export default function Navbar() {
       <div className="nav-user">
         <div className="nav-user-info">
           <div className="nav-user-name">
-            {session?.name || RESIDENT.name}
+            {session?.name || session?.email}
           </div>
 
-          {!isAdmin && (
+          {!isAdmin && session?.apartmentLabel && (
             <div className="nav-apt">
-              {RESIDENT.apartment}
+              {session.apartmentLabel}
             </div>
           )}
         </div>
 
         <div className="nav-avatar">
-          {isAdmin ? "ADM" : "CM"}
+          {isAdmin ? "ADM" : session?.initials}
         </div>
 
         <button

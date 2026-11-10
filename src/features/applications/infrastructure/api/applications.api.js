@@ -6,9 +6,9 @@ const BASE_URL = "/api";
 
 // Infrastructure Gateway:
 // Creates an authenticated application through the backend API.
+// The resident is taken from the JWT on the backend, not from the body.
 export async function createApplicationRequest({
   convocationId,
-  residentId,
   documentIds,
 }) {
   const response = await authenticatedFetch(`${BASE_URL}/applications`, {
@@ -18,7 +18,6 @@ export async function createApplicationRequest({
     },
     body: JSON.stringify({
       callId: convocationId,
-      residentId,
       documentIds,
     }),
   });

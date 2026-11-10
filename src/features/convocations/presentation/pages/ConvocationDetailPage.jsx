@@ -11,6 +11,7 @@ import {
 import Tooltip from "../../../../components/Tooltip";
 import ConvocationInfo from "../components/ConvocationInfo";
 import useConvocation from "../hooks/useConvocation";
+import { isConvocationOpen } from "../../domain/entities/Convocation";
 import { checkApplicationEligibility } from "../../../applications/infrastructure/api/applications.api";
 
 
@@ -38,8 +39,7 @@ export default function ConvocationDetailPage() {
         return null;
     }
 
-    const isOpen =
-        convocation.availableSlots > 0;
+    const isOpen = isConvocationOpen(convocation);
 
     const handleApplication = async () => {
         try {
@@ -104,6 +104,19 @@ export default function ConvocationDetailPage() {
                     {convocation.title}
                 </span>
             </div>
+
+            {convocation.drawExecuted && (
+                <div className="form-actions">
+                    <button
+                        type="button"
+                        className="btn btn-primary"
+                        data-testid="convocation-draw-results-button"
+                        onClick={() => navigate(`/calls/${id}/draw/results`)}
+                    >
+                        Ver resultados del sorteo
+                    </button>
+                </div>
+            )}
 
             <div className="detail-layout">
                 <div>

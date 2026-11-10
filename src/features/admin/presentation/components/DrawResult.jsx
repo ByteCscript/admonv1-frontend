@@ -14,28 +14,41 @@ export default function DrawResult({ result }) {
   return (
     <div data-testid="draw-result">
       <div className="draw-stats">
-        <Stat label="Cupos" value={result.availableSlots} />
+        <Stat label="Cupos" value={result.totalSlots} />
         <Stat label="Participantes" value={result.participantsCount} />
         <Stat label="Seleccionadas" value={result.selectedCount} />
         <Stat label="En lista de espera" value={result.waitlistCount} />
       </div>
+
+      {result.directAssignment && (
+        <div className="info-box" data-testid="draw-direct-assignment-result">
+          <span className="info-box-icon" aria-hidden="true">ℹ️</span>
+          <span>
+            Había cupos para todas las solicitudes aprobadas, así que todas
+            quedaron asignadas sin lista de espera. Cupos sin asignar:{" "}
+            {result.totalSlots - result.selectedCount}.
+          </span>
+        </div>
+      )}
 
       <section className="form-card draw-section">
         <h2 className="form-section-title">Solicitudes seleccionadas</h2>
         <EntriesTable entries={selected} testId="draw-selected-table" />
       </section>
 
-      <section className="form-card draw-section">
-        <h2 className="form-section-title">Lista de espera</h2>
-        <p className="draw-help">
-          Si un seleccionado renuncia, el cupo se ofrece en este orden.
-        </p>
-        <EntriesTable
-          entries={waitlist}
-          showWaitlist
-          testId="draw-waitlist-table"
-        />
-      </section>
+      {!result.directAssignment && (
+        <section className="form-card draw-section">
+          <h2 className="form-section-title">Lista de espera</h2>
+          <p className="draw-help">
+            Si un seleccionado renuncia, el cupo se ofrece en este orden.
+          </p>
+          <EntriesTable
+            entries={waitlist}
+            showWaitlist
+            testId="draw-waitlist-table"
+          />
+        </section>
+      )}
 
       <AuditPanel result={result} />
     </div>

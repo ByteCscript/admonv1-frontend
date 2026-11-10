@@ -10,6 +10,7 @@ export default function DrawResultsTable({
   onExport,
   exporting = false,
   hash = null,
+  emptyMessage = "No hay resultados del sorteo para esta convocatoria.",
 }) {
   const formatDateTime = (value) => {
     if (!value) {
@@ -64,7 +65,7 @@ export default function DrawResultsTable({
             {results.length === 0 ? (
               <tr>
                 <td colSpan={6} className="draw-help">
-                  No hay resultados del sorteo para esta convocatoria.
+                  {emptyMessage}
                 </td>
               </tr>
             ) : (

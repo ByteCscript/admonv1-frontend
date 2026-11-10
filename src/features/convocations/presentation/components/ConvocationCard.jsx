@@ -1,3 +1,8 @@
+import {
+    canViewConvocationDetails,
+    convocationStatusView,
+} from "../../domain/entities/Convocation";
+
 // Presentational Component Pattern:
 // Component focused solely on visual representation.
 //
@@ -7,24 +12,18 @@ export default function ConvocationCard({
     convocation,
     onViewDetails,
 }) {
-    // Estado visible en tarjeta (D-h): nunca se lee `status` derivado,
-    // solo cupos y el cierre manual, para no romper con fechas vencidas.
-    const isOpen =
-        convocation.availableSlots > 0 && !convocation.closedManually;
+    const statusView = convocationStatusView(convocation);
 
     return (
         <div className="call-card" data-testid={`convocation-card-${convocation.id}`}>
             <div className="call-card-body">
                 <div className="call-card-meta">
-                    <span
-                        className={`badge ${isOpen ? "badge-open" : "badge-closed"
-                            }`}
-                    >
-                        {isOpen ? "Abierta" : "Cerrada"}
+                    <span className={`badge ${statusView.badgeClass}`}>
+                        {statusView.label}
                     </span>
 
                     <span className="call-card-slots">
-                        👤 {convocation.availableSlots} cupos disponibles
+                        👤 {convocation.totalSlots} cupos
                     </span>
                 </div>
 
@@ -36,7 +35,7 @@ export default function ConvocationCard({
                     <button
                         data-testid={`convocation-view-details-button-${convocation.id}`}
                         className="btn-card"
-                        disabled={!isOpen}
+                        disabled={!canViewConvocationDetails(convocation)}
                         onClick={onViewDetails}
                     >
                         Ver Detalles
